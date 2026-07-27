@@ -2,8 +2,25 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.FinTrack" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/emerald_green</item>
+        <item name="colorSecondary">@color/soft_red</item>
+
+        <item name="colorPrimaryContainer">@color/light_lavender</item>
+        <item name="colorOnPrimaryContainer">@color/emerald_green</item>
+
+        <item name="android:windowBackground">@color/background_gray</item>
     </style>
 
     <style name="Theme.FinTrack" parent="Base.Theme.FinTrack" />
+
+    <style name="AppTextAppearance.BottomNav.Inactive" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:textColor">@color/nav_unselected</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="AppTextAppearance.BottomNav.Active" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:textColor">@color/emerald_green</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">13sp</item>
+    </style>
 </resources>

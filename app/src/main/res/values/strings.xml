@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">FinTrack</string>
+    <string name="title_statistics">Thống kê chi tiêu trực quan</string>
+    <string name="btn_this_month">Tháng này</string>
+    <string name="income_legend">Thu nhập (+)</string>
+    <string name="expense_legend">Chi tiêu (-)</string>
+    <string name="most_spent_envelope">Phong bì tiêu nhiều nhất</string>
+    <string name="default_balance">-12.450.000 đ</string>
+    <string name="menu_home">Trang chủ</string>
+    <string name="menu_statistics">Thống kê</string>
+    <string name="menu_history">Lịch sử</string>
+    <string name="menu_settings">Cài đặt</string>
+    <string name="title_settings">Cài đặt &amp; Đồng bộ</string>
+    <string name="backup_cloud">Sao Lưu Đám Mây</string>
+    <string name="connect_drive">Kết nối Google Drive</string>
+    <string name="auto_backup">Tự động sao lưu</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
