@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+
+    <!-- Màu sắc theo quy tắc nhóm -->
+    <color name="emerald_green">#00A86B</color>
+    <color name="soft_red">#EB5757</color>
+    <color name="background_gray">#F8F9FA</color>
+
+    <!-- Các màu bổ trợ khác -->
+    <color name="emerald_green_dark">#0B592F</color>
+    <color name="emerald_green_light">#EAF5EE</color>
+    <color name="warning_orange">#FB8C00</color>
+    <color name="text_dark">#333333</color>
+    <color name="text_muted">#888888</color>
+</resources>

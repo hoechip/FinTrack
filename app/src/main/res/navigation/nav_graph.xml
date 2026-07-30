@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/m3_dashboard">
+
+    <fragment
+        android:id="@+id/m3_dashboard"
+        android:name="com.example.fintrack.M3DashboardFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first">
+        <action
+            android:id="@+id/action_m3_to_m4"
+            app:destination="@id/m4_envelopes" />
+        <action
+            android:id="@+id/action_m3_to_categories"
+            app:destination="@id/fragment_categories" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/m4_envelopes"
+        android:name="com.example.fintrack.M4EnvelopesFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_second">
+        <action
+            android:id="@+id/action_m4_to_m3"
+            app:destination="@id/m3_dashboard" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_categories"
+        android:name="com.example.fintrack.PlaceholderFragment"
+        android:label="Danh mục" />
+
+    <fragment
+        android:id="@+id/fragment_chart"
+        android:name="com.example.fintrack.PlaceholderFragment"
+        android:label="Thống kê" />
+
+    <fragment
+        android:id="@+id/fragment_history"
+        android:name="com.example.fintrack.PlaceholderFragment"
+        android:label="@string/menu_history" />
+
+    <fragment
+        android:id="@+id/fragment_settings"
+        android:name="com.example.fintrack.PlaceholderFragment"
+        android:label="Cài đặt" />
+
+    <fragment
+        android:id="@+id/fragment_monthly_budget"
+        android:name="com.example.fintrack.PlaceholderFragment"
+        android:label="@string/menu_monthly_budget" />
+
+    <fragment
+        android:id="@+id/fragment_savings_goals"
+        android:name="com.example.fintrack.PlaceholderFragment"
+        android:label="@string/menu_savings_goals" />
+</navigation>
