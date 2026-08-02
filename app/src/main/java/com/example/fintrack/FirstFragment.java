@@ -43,4 +43,3 @@ public class FirstFragment extends Fragment {
     }
 
 }
-public class FirstFragment extends Fragment {}

@@ -5,19 +5,19 @@
         android:icon="@drawable/ic_home"
         android:title="@string/menu_home" />
     <item
-        android:id="@+id/StatisticsFragment"
+        android:id="@+id/fragment_chart"
         android:icon="@drawable/ic_statistics"
-        android:title="@string/menu_statistics" />
+        android:title="@string/menu_stats" />
     <item
         android:id="@+id/placeholder"
         android:title=""
         android:enabled="false" />
     <item
-        android:id="@+id/navigation_history"
+        android:id="@+id/fragment_history"
         android:icon="@drawable/ic_history"
         android:title="@string/menu_history" />
     <item
-        android:id="@+id/navigation_settings"
+        android:id="@+id/fragment_settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/menu_settings" />
 </menu>

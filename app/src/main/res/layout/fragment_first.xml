@@ -1,321 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
     android:background="@color/background_gray"
-    tools:context=".M3DashboardFragment">
-    tools:context=".M3DashboardFragment">
+    android:fillViewport="true"
+    tools:context=".FirstFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    <androidx.core.widget.NestedScrollView
-    <ImageButton
-        android:id="@+id/btn_m3_menu"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_menu_hamburger"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="Menu" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_m3_recent_transactions"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:paddingBottom="100dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- 1. HEADER BACKGROUND (GREEN) -->
+        <View
+            android:id="@+id/view_m3_header_bg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="100dp">
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_m3_view_all_progress"
-        app:layout_constraintTop_toBottomOf="@+id/btn_m3_menu" />
+            android:layout_height="240dp"
+            android:background="@color/emerald_green"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/button_first"
+        <ImageButton
+            android:id="@+id/btn_m3_menu"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_menu"
+            android:src="@drawable/ic_menu_hamburger"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_m3_dashboard_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_m3_dashboard_title" />
+
+        <TextView
+            android:id="@+id/txt_m3_dashboard_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/next"
-            app:layout_constraintBottom_toTopOf="@id/textview_first"
+            android:layout_marginTop="24dp"
+            android:text="@string/dashboard_title"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-            <!-- 1. HEADER BACKGROUND (GREEN) -->
-            <View
-                android:id="@+id/view_m3_header_bg"
-                android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:background="@color/emerald_green"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/btn_m3_menu"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/desc_menu"
-                android:src="@drawable/ic_menu_hamburger"
-                app:layout_constraintBottom_toBottomOf="@+id/txt_m3_dashboard_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txt_m3_dashboard_title" />
-
-            <TextView
-                android:id="@+id/txt_m3_dashboard_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/dashboard_title"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_m3_avatar"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="16dp"
+            android:padding="2dp"
+            android:src="@drawable/ic_user_placeholder"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_m3_dashboard_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_m3_dashboard_title"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp" />
 
         <TextView
-            android:id="@+id/textview_first"
+            android:id="@+id/txt_m3_label_balance_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/lorem_ipsum"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:text="@string/label_balance"
+            android:textColor="#CCFFFFFF"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_first" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_m3_dashboard_title" />
+
+        <TextView
+            android:id="@+id/txt_m3_total_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mock_balance"
+            android:textColor="@color/white"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/txt_m3_label_balance_hint"
+            app:layout_constraintTop_toBottomOf="@+id/txt_m3_label_balance_hint" />
+
+        <TextView
+            android:id="@+id/txt_m3_label_expense_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/label_expense"
+            android:textColor="#CCFFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_m3_total_balance" />
+
+        <TextView
+            android:id="@+id/txt_m3_total_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mock_expense"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/txt_m3_label_expense_hint"
+            app:layout_constraintTop_toBottomOf="@+id/txt_m3_label_expense_hint" />
+
+        <!-- 2. SPENDING PROGRESS CARD -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_m3_spending_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="6dp"
+            app:layout_constraintTop_toBottomOf="@+id/txt_m3_total_expense">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/txt_m3_title_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_spending_progress"
+                    android:textColor="@color/text_dark"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/btn_m3_view_all_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_view_all"
+                    android:textColor="@color/emerald_green"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txt_m3_title_progress" />
+
+                <!-- Grid Layout for Items -->
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:columnCount="2"
+                    android:useDefaultMargins="true"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_m3_title_progress">
+
+                    <!-- Ăn uống -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:orientation="vertical"
+                        android:padding="4dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_food" android:textStyle="bold" android:textColor="@color/text_dark" android:textSize="13sp"/>
+                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="6dp" android:progress="75" android:progressTint="@color/emerald_green" android:layout_marginTop="6dp"/>
+                    </LinearLayout>
+
+                    <!-- Di chuyển -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:orientation="vertical"
+                        android:padding="4dp">
+                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_transport" android:textStyle="bold" android:textColor="@color/text_dark" android:textSize="13sp"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="@string/limit_transport" android:textSize="11sp" android:textColor="@color/text_muted"/>
+                        </RelativeLayout>
+                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="6dp" android:progress="45" android:progressTint="@color/emerald_green" android:layout_marginTop="6dp"/>
+                    </LinearLayout>
+
+                    <!-- Mua sắm -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:orientation="vertical"
+                        android:padding="4dp"
+                        android:layout_marginTop="12dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_shopping" android:textStyle="bold" android:textColor="@color/text_dark" android:textSize="13sp"/>
+                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="6dp" android:progress="30" android:progressTint="@color/emerald_green" android:layout_marginTop="6dp"/>
+                    </LinearLayout>
+
+                    <!-- Shopping Limit info -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:gravity="end"
+                        android:layout_marginTop="12dp"
+                        android:padding="4dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/limit_shopping" android:textSize="11sp" android:textColor="@color/text_muted" android:layout_marginTop="20dp"/>
+                    </LinearLayout>
+                </GridLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 3. RECENT TRANSACTIONS CARD -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_m3_recent_transactions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="40dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="6dp"
+            app:layout_constraintTop_toBottomOf="@+id/card_m3_spending_progress">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/txt_m3_title_transactions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_recent_transactions"
+                    android:textColor="@color/text_dark"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/btn_m3_view_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_view_history"
+                    android:textColor="@color/emerald_green"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_m3_title_transactions"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txt_m3_title_transactions" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_m3_recent_transactions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_m3_title_transactions"
+                    tools:listitem="@layout/item_transaction_recent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/img_m3_avatar"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:layout_marginEnd="16dp"
-                android:padding="2dp"
-                android:src="@drawable/ic_user_placeholder"
-                app:layout_constraintBottom_toBottomOf="@+id/txt_m3_dashboard_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txt_m3_dashboard_title"
-                app:shapeAppearanceOverlay="@style/CircleImage"
-                app:strokeColor="@color/white"
-                app:strokeWidth="1dp" />
-
-            <TextView
-                android:id="@+id/txt_m3_label_balance_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="28dp"
-                android:text="@string/label_balance"
-                android:textColor="#CCFFFFFF"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_m3_dashboard_title" />
-
-            <TextView
-                android:id="@+id/txt_m3_total_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mock_balance"
-                android:textColor="@color/white"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/txt_m3_label_balance_hint"
-                app:layout_constraintTop_toBottomOf="@+id/txt_m3_label_balance_hint" />
-
-            <TextView
-                android:id="@+id/txt_m3_label_expense_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/label_expense"
-                android:textColor="#CCFFFFFF"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_m3_total_balance" />
-
-            <TextView
-                android:id="@+id/txt_m3_total_expense"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mock_expense"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/txt_m3_label_expense_hint"
-                app:layout_constraintTop_toBottomOf="@+id/txt_m3_label_expense_hint" />
-
-            <!-- 2. SPENDING PROGRESS CARD -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_m3_spending_progress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="6dp"
-                app:layout_constraintTop_toBottomOf="@+id/txt_m3_total_expense">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:id="@+id/txt_m3_title_progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_spending_progress"
-                        android:textColor="@color/text_dark"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/btn_m3_view_all_progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_view_all"
-                        android:textColor="@color/emerald_green"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/txt_m3_title_progress" />
-
-                    <!-- Grid Layout for Items -->
-                    <GridLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:columnCount="2"
-                        android:useDefaultMargins="true"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_m3_title_progress">
-
-                        <!-- Ăn uống -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_columnWeight="1"
-                            android:orientation="vertical"
-                            android:padding="4dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_food" android:textStyle="bold" android:textColor="@color/text_dark" android:textSize="13sp"/>
-                            <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="6dp" android:progress="75" android:progressTint="@color/emerald_green" android:layout_marginTop="6dp"/>
-                        </LinearLayout>
-
-                        <!-- Di chuyển -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_columnWeight="1"
-                            android:orientation="vertical"
-                            android:padding="4dp">
-                            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_transport" android:textStyle="bold" android:textColor="@color/text_dark" android:textSize="13sp"/>
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="@string/limit_transport" android:textSize="11sp" android:textColor="@color/text_muted"/>
-                            </RelativeLayout>
-                            <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="6dp" android:progress="45" android:progressTint="@color/emerald_green" android:layout_marginTop="6dp"/>
-                        </LinearLayout>
-
-                        <!-- Mua sắm -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_columnWeight="1"
-                            android:orientation="vertical"
-                            android:padding="4dp"
-                            android:layout_marginTop="12dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_shopping" android:textStyle="bold" android:textColor="@color/text_dark" android:textSize="13sp"/>
-                            <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="6dp" android:progress="30" android:progressTint="@color/emerald_green" android:layout_marginTop="6dp"/>
-                        </LinearLayout>
-
-                        <!-- Shopping Limit info -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_columnWeight="1"
-                            android:gravity="end"
-                            android:layout_marginTop="12dp"
-                            android:padding="4dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/limit_shopping" android:textSize="11sp" android:textColor="@color/text_muted" android:layout_marginTop="20dp"/>
-                        </LinearLayout>
-                    </GridLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- 3. RECENT TRANSACTIONS CARD -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_m3_recent_transactions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="40dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="6dp"
-                app:layout_constraintTop_toBottomOf="@+id/card_m3_spending_progress">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:id="@+id/txt_m3_title_transactions"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_recent_transactions"
-                        android:textColor="@color/text_dark"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/btn_m3_view_history"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_view_history"
-                        android:textColor="@color/emerald_green"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/txt_m3_title_transactions"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/txt_m3_title_transactions" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_m3_recent_transactions"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:nestedScrollingEnabled="false"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_m3_title_transactions"
-                        tools:listitem="@layout/item_transaction_recent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <Button
-        android:id="@+id/btn_m3_view_all_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View All"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>

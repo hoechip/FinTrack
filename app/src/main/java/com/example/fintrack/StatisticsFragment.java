@@ -1,9 +1,12 @@
 package com.example.fintrack;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +21,7 @@ import java.util.Locale;
 
 public class StatisticsFragment extends Fragment {
 
+    private static final String TAG = "StatisticsFragment";
     private FragmentStatisticsBinding binding;
     private FirebaseFirestore db;
     private EnvelopeAdapter adapter;
@@ -25,20 +29,30 @@ public class StatisticsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentStatisticsBinding.inflate(inflater, container, false);
-        db = FirebaseFirestore.getInstance();
-        return binding.getRoot();
+        try {
+            binding = FragmentStatisticsBinding.inflate(inflater, container, false);
+            db = FirebaseFirestore.getInstance();
+            return binding.getRoot();
+        } catch (Exception e) {
+            Log.e(TAG, "Error in onCreateView", e);
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupRecyclerView();
-        fetchStatistics();
-        setupDatePicker();
-        
-        // Load fake data for demo
-        loadFakeEnvelopes();
+        if (binding == null) return;
+
+        try {
+            setupRecyclerView();
+            fetchStatistics();
+            setupDatePicker();
+            loadFakeEnvelopes();
+        } catch (Exception e) {
+            Log.e(TAG, "Error in onViewCreated", e);
+            Toast.makeText(getContext(), "Error loading statistics", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setupRecyclerView() {
@@ -72,6 +86,7 @@ public class StatisticsFragment extends Fragment {
     }
 
     private void fetchStatistics() {
+        if (db == null) return;
         db.collection("transactions")
                 .get()
                 .addOnCompleteListener(task -> {
@@ -83,16 +98,14 @@ public class StatisticsFragment extends Fragment {
                             Double amount = document.getDouble("amount");
                             if (amount != null && type != null) {
                                 switch (type) {
-                                    case "income":
-                                        incomeSum += amount;
-                                        break;
-                                    case "expense":
-                                        expenseSum += amount;
-                                        break;
+                                    case "income": incomeSum += amount; break;
+                                    case "expense": expenseSum += amount; break;
                                 }
                             }
                         }
                         updateUI(incomeSum, expenseSum);
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
                     }
                 });
     }
@@ -111,9 +124,6 @@ public class StatisticsFragment extends Fragment {
 
             binding.pbM5Income.setProgress(incomePercent);
             binding.pbM5Expense.setProgress(expensePercent);
-            
-            binding.pbM5Expense.setRotation(-90);
-            binding.pbM5Income.setRotation((float) (expensePercent * 3.6 - 90));
         } else {
             binding.pbM5Income.setProgress(0);
             binding.pbM5Expense.setProgress(0);

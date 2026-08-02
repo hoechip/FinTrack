@@ -73,17 +73,13 @@
     <string name="limit_transport">25k vs limit</string>
     <string name="limit_shopping">10k vs limit</string>
     <string name="desc_add_transaction">Thêm giao dịch</string>
-    <string name="menu_home">Trang chủ</string>
     <string name="menu_categories">Danh mục</string>
     <string name="menu_stats">Thống kê</string>
-    <string name="menu_history">Lịch sử</string>
-    <string name="menu_settings">Cài đặt</string>
     <string name="title_m4_envelopes">Quản lý Danh sách Phong bì</string>
     <string name="btn_m4_create_envelope">TẠO PHONG BÌ MỚI</string>
     <string name="label_m4_total_pool">Tổng bể tiền: 20.000.000 đ</string>
     <string name="label_m4_remaining">còn lại</string>
     <string name="label_m4_overspent">tiêu lạm</string>
-    <string name="msg_in_development">Tính năng đang phát triển</string>
     <string name="desc_menu">Menu danh mục</string>
     <string name="menu_manage_envelopes">Quản lý phong bì</string>
     <string name="menu_monthly_budget">Ngân sách đầu tháng</string>

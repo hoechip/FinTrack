@@ -1,9 +1,11 @@
 package com.example.fintrack;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,7 @@ import java.util.List;
 
 public class M3DashboardFragment extends Fragment {
 
+    private static final String TAG = "M3DashboardFragment";
     private FragmentFirstBinding binding;
 
     @Override
@@ -48,22 +51,33 @@ public class M3DashboardFragment extends Fragment {
         }
 
         // 2. Xử lý click Xem tất cả
-        if (binding.btnM3ViewAllProgress != null) {
-            binding.btnM3ViewAllProgress.setOnClickListener(v ->
-                    NavHostFragment.findNavController(M3DashboardFragment.this)
-                            .navigate(R.id.action_m3_to_m4)
-            );
-        }
+        binding.btnM3ViewAllProgress.setOnClickListener(v -> {
+            Log.d(TAG, "btnM3ViewAllProgress clicked");
+            NavHostFragment.findNavController(M3DashboardFragment.this)
+                    .navigate(R.id.action_m3_to_m4);
+        });
 
         // 3. Mở Menu trượt (Drawer) khi nhấn dấu 3 gạch
-        if (binding.btnM3Menu != null) {
-            binding.btnM3Menu.setOnClickListener(v -> {
-                // TODO: Implement drawer or menu action
-                // if (getActivity() instanceof MainActivity) {
-                //     ((MainActivity) getActivity()).openDrawer();
-                // }
-            });
-        }
+        binding.btnM3Menu.setOnClickListener(v -> {
+            Log.d(TAG, "btnM3Menu clicked");
+            if (getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).openDrawer();
+            } else {
+                Toast.makeText(getContext(), "Drawer not available", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 4. Xử lý click Xem lịch sử
+        binding.btnM3ViewHistory.setOnClickListener(v -> {
+            Log.d(TAG, "btnM3ViewHistory clicked");
+            NavHostFragment.findNavController(M3DashboardFragment.this)
+                    .navigate(R.id.fragment_history);
+        });
+        
+        // 5. Click Avatar
+        binding.imgM3Avatar.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Profile clicked", Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
