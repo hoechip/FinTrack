@@ -2,9 +2,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.fintrack.MainActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/m3_dashboard"
+        android:icon="@drawable/ic_bnv_home"
+        android:title="@string/menu_home" />
+
+    <item
+        android:id="@+id/fragment_chart"
+        android:icon="@drawable/ic_bnv_stats"
+        android:title="@string/menu_stats" />
+
+    <!-- Placeholder cho nút FAB ở giữa -->
+    <item
+        android:id="@+id/placeholder"
+        android:enabled="false"
+        android:title="" />
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+        android:id="@+id/fragment_history"
+        android:icon="@drawable/ic_bnv_history"
+        android:title="@string/menu_history" />
+
+    <item
+        android:id="@+id/fragment_settings"
+        android:icon="@drawable/ic_bnv_settings"
+        android:title="@string/menu_settings" />
 </menu>

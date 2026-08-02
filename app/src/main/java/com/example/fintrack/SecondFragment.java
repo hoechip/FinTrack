@@ -1,3 +1,4 @@
+// Replaced by M4EnvelopesFragment.java
 package com.example.fintrack;
 
 import android.os.Bundle;
@@ -29,9 +30,9 @@ public class SecondFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonSecond.setOnClickListener(v ->
+        binding.btnM4Back.setOnClickListener(v ->
                 NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment)
+                        .navigate(R.id.action_m4_to_m3)
         );
     }
 
@@ -42,3 +43,4 @@ public class SecondFragment extends Fragment {
     }
 
 }
+public class SecondFragment extends Fragment {}

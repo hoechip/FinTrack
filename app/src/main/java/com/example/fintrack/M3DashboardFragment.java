@@ -58,9 +58,10 @@ public class M3DashboardFragment extends Fragment {
         // 3. Mở Menu trượt (Drawer) khi nhấn dấu 3 gạch
         if (binding.btnM3Menu != null) {
             binding.btnM3Menu.setOnClickListener(v -> {
-                if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).openDrawer();
-                }
+                // TODO: Implement drawer or menu action
+                // if (getActivity() instanceof MainActivity) {
+                //     ((MainActivity) getActivity()).openDrawer();
+                // }
             });
         }
     }

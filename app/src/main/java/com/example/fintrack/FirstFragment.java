@@ -1,3 +1,4 @@
+// Replaced by M3DashboardFragment.java
 package com.example.fintrack;
 
 import android.os.Bundle;
@@ -29,9 +30,9 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(v ->
+        binding.btnM3ViewAllProgress.setOnClickListener(v ->
                 NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment)
+                        .navigate(R.id.action_m3_to_m4)
         );
     }
 
@@ -42,3 +43,4 @@ public class FirstFragment extends Fragment {
     }
 
 }
+public class FirstFragment extends Fragment {}

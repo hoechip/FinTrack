@@ -12,8 +12,7 @@ public class Envelope {
     // No-argument constructor required for Firebase
     public Envelope() {}
 
-    public Envelope(String name, double spentAmount, double totalAmount, String iconName, String colorHex) {
-    public Envelope(String id, String name, int iconRes) {
+    public Envelope(String id, String name, double spentAmount, double totalAmount, String iconName, String colorHex, int iconRes) {
         this.id = id;
         this.name = name;
         this.spentAmount = spentAmount;
@@ -21,6 +20,14 @@ public class Envelope {
         this.iconName = iconName;
         this.colorHex = colorHex;
         this.iconRes = iconRes;
+    }
+
+    public Envelope(String name, double spentAmount, double totalAmount, String iconName, String colorHex) {
+        this(null, name, spentAmount, totalAmount, iconName, colorHex, 0);
+    }
+
+    public Envelope(String id, String name, int iconRes) {
+        this(id, name, 0, 0, null, null, iconRes);
     }
 
     public String getId() { return id; }
