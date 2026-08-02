@@ -7,17 +7,24 @@ public class Envelope {
     private double totalAmount; // For progress calculation
     private String iconName; // e.g., "ic_food", "ic_transport"
     private String colorHex;
+    private int iconRes;
 
+    // No-argument constructor required for Firebase
     public Envelope() {}
 
     public Envelope(String name, double spentAmount, double totalAmount, String iconName, String colorHex) {
+    public Envelope(String id, String name, int iconRes) {
+        this.id = id;
         this.name = name;
         this.spentAmount = spentAmount;
         this.totalAmount = totalAmount;
         this.iconName = iconName;
         this.colorHex = colorHex;
+        this.iconRes = iconRes;
     }
 
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
     public String getName() { return name; }
     public double getSpentAmount() { return spentAmount; }
     public double getTotalAmount() { return totalAmount; }
@@ -27,4 +34,7 @@ public class Envelope {
         if (totalAmount <= 0) return 0;
         return (int) ((spentAmount / totalAmount) * 100);
     }
+    public void setName(String name) { this.name = name; }
+    public int getIconRes() { return iconRes; }
+    public void setIconRes(int iconRes) { this.iconRes = iconRes; }
 }

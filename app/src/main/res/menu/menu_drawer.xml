@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/m3_dashboard"
+            android:icon="@drawable/ic_bnv_home"
+            android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/fragment_chart"
+            android:icon="@drawable/ic_bnv_stats"
+            android:title="@string/menu_stats" />
+
+        <item
+            android:id="@+id/m4_envelopes"
+            android:icon="@drawable/ic_bnv_envelopes"
+            android:title="@string/menu_manage_envelopes" />
+
+        <item
+            android:id="@+id/fragment_monthly_budget"
+            android:icon="@drawable/ic_bnv_budget"
+            android:title="@string/menu_monthly_budget" />
+
+        <item
+            android:id="@+id/fragment_savings_goals"
+            android:icon="@drawable/ic_bnv_savings"
+            android:title="@string/menu_savings_goals" />
+
+        <item
+            android:id="@+id/fragment_history"
+            android:icon="@drawable/ic_bnv_history"
+            android:title="@string/menu_history" />
+
+        <item
+            android:id="@+id/fragment_settings"
+            android:icon="@drawable/ic_bnv_settings"
+            android:title="@string/menu_settings" />
+    </group>
+
+</menu>
