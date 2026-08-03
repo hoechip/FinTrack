@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+id("com.google.gms.google-services")
 }
 
 android {
@@ -46,4 +47,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
+implementation(libs.recyclerview)
+    implementation(libs.cardview)
+    implementation(platform("com.google.firebase:firebase-bom:34.16.0"))
+    implementation(libs.firebase.firestore)
+
 }
