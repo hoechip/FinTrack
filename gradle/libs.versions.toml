@@ -20,6 +20,9 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
+recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.4.0" }
+cardview = { group = "androidx.cardview", name = "cardview", version = "1.0.0" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
