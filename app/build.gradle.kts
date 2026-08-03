@@ -38,14 +38,22 @@ android {
 }
 
 dependencies {
+    // Các thư viện giao diện & điều hướng có sẵn của bạn
     implementation(libs.activity.ktx)
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
-    implementation(libs.firebase.firestore)
-    implementation(libs.firebase.database)
     implementation(libs.material)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+
+    // Bổ sung các thư viện Firebase cho Đăng nhập, Lưu cơ sở dữ liệu & Storage
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
+
+    // Thử nghiệm
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)

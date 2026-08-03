@@ -2,8 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Quyền mạng sẵn có của bạn -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Quyền đọc ảnh từ bộ nhớ cho chức năng đại diện / hồ sơ -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,16 +19,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinTrack">
+
+        <!-- Màn hình chào Splash (chạy đầu tiên khi mở app) -->
         <activity
-            android:name=".MainActivity"
+            android:name=".splashActivity"
             android:exported="true"
-            android:theme="@style/Theme.FinTrack"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Các Activity Đăng nhập, Đăng ký, Quên mật khẩu & Trang cá nhân -->
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+        <!-- Activity chính chứa giao diện khung -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FinTrack"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>

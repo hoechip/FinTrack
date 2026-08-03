@@ -1,5 +1,6 @@
 package com.example.fintrack;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -50,6 +51,19 @@ public class MainActivity extends AppCompatActivity {
                 NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
                 NavigationUI.setupWithNavController(binding.bottomNav, navController);
                 NavigationUI.setupWithNavController(binding.navViewDrawer, navController);
+
+                // Setup Profile click in Drawer Header
+                View headerView = binding.navViewDrawer.getHeaderView(0);
+                if (headerView != null) {
+                    View imgAvatar = headerView.findViewById(R.id.img_nav_header_avatar);
+                    if (imgAvatar != null) {
+                        imgAvatar.setOnClickListener(v -> {
+                            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                            startActivity(intent);
+                            binding.drawerLayout.closeDrawer(GravityCompat.START);
+                        });
+                    }
+                }
 
                 navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
                     Log.d(TAG, "onDestinationChanged: " + destination.getLabel());

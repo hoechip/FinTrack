@@ -1,5 +1,6 @@
 package com.example.fintrack;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,7 +77,8 @@ public class M3DashboardFragment extends Fragment {
         
         // 5. Click Avatar
         binding.imgM3Avatar.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Profile clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), ProfileActivity.class);
+            startActivity(intent);
         });
     }
 

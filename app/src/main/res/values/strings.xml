@@ -1,4 +1,11 @@
 <resources>
+    <string name="login">ĐĂNG NHẬP</string>
+    <string name="register">Đăng ký ngay</string>
+    <string name="guest">TRẢI NGHIỆM NGAY (OFFLINE)</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="welcome_back">Chào mừng bạn quay trở lại</string>
     <string name="app_name">FinTrack</string>
     <string name="title_statistics">Thống kê chi tiêu trực quan</string>
     <string name="btn_this_month">Tháng này</string>
