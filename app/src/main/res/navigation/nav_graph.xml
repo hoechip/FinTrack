@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/PhanBoNganSachFragment">
+
+    <fragment
+        android:id="@+id/PhanBoNganSachFragment"
+        android:name="com.example.fintrack.PhanBoNganSachFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_phan_bo_ngan_sach">
+
+        <action
+            android:id="@+id/action_PhanBoNganSachFragment_to_TienDoNganSachFragment"
+            app:destination="@id/TienDoNganSachFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TienDoNganSachFragment"
+        android:name="com.example.fintrack.TienDoNganSachFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_tien_do_ngan_sach">
+
+        <action
+            android:id="@+id/action_TienDoNganSachFragment_to_PhanBoNganSachFragment"
+            app:destination="@id/PhanBoNganSachFragment" />
+    </fragment>
+</navigation>

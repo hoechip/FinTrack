@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- Custom Theme Colors for FinTrack -->
+    <color name="emerald_green">#00A86B</color>
+    <color name="emerald_green_dark">#008A56</color>
+    <color name="emerald_green_light">#E6F6F0</color>
+    <color name="soft_green">#27AE60</color>
+    <color name="soft_red">#EB5757</color>
+    <color name="soft_red_light">#FEE2E2</color>
+    <color name="amber_warning">#F59E0B</color>
+    <color name="amber_warning_light">#FEF3C7</color>
+    
+    <!-- Neutral Colors -->
+    <color name="screen_bg">#F8F9FA</color>
+    <color name="card_bg">#FFFFFF</color>
+    <color name="progress_track">#E5E7EB</color>
+    <color name="border_color">#D1D5DB</color>
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_muted">#9CA3AF</color>
+    
+    <!-- Button states -->
+    <color name="btn_disabled_bg">#D1D5DB</color>
+    <color name="btn_disabled_text">#9CA3AF</color>
+</resources>

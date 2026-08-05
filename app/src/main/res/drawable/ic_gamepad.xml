@@ -1,0 +1,18 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+    <!-- Gamepad controller (Orange) -->
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M27,10 L9,10 C5.1,10 2,13.1 2,17 C2,21.9 5.8,26 10.7,26 L12,26 L14,22 L22,22 L24,26 L25.3,26 C30.2,26 34,21.9 34,17 C34,13.1 30.9,10 27,10 Z" />
+    <!-- D-Pad buttons -->
+    <path
+        android:fillColor="#424242"
+        android:pathData="M9,14 L11,14 L11,16 L13,16 L13,18 L11,18 L11,20 L9,20 L9,18 L7,18 L7,16 L9,16 Z" />
+    <!-- Action buttons -->
+    <path
+        android:fillColor="#424242"
+        android:pathData="M27,15 A1.2,1.2 0 1,0 27,17.4 A1.2,1.2 0 1,0 27,15 M24,18 A1.2,1.2 0 1,0 24,20.4 A1.2,1.2 0 1,0 24,18 M27,19 A1.2,1.2 0 1,0 27,21.4 A1.2,1.2 0 1,0 27,19 M30,18 A1.2,1.2 0 1,0 30,20.4 A1.2,1.2 0 1,0 30,18" />
+</vector>

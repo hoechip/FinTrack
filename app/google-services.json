@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "504039744021",
+    "firebase_url": "https://quynh-e97e6-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "quynh-e97e6",
+    "storage_bucket": "quynh-e97e6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504039744021:android:8d9897da441cb51062a41c",
+        "android_client_info": {
+          "package_name": "com.example.fintrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFmB3eMFiX9MFZP7hOBsURM9LRu80ZQN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">FinTrack</string>
+    <string name="action_settings">Settings</string>
+    
+    <!-- Navigation Strings -->
+    <string name="first_fragment_label">Phân bổ Ngân sách</string>
+    <string name="second_fragment_label">Tiến trình Hạn mức</string>
+    <string name="btn_screen_5">Màn hình 5</string>
+    <string name="btn_screen_6">Màn hình 6</string>
+    
+    <!-- Screen 5 Strings -->
+    <string name="title_screen_5">PHÂN BỔ NGÂN SÁCH ĐẦU THÁNG</string>
+    <string name="target_income_label">TỔNG THU NHẬP MỤC TIÊU THÁNG</string>
+    <string name="total_allocated_label">Tổng phân bổ:</string>
+    <string name="remaining_balance_label">SỐ DƯ CÒN LẠI ĐỂ PHÂN BỔ:</string>
+    <string name="save_budget_btn">LƯU NGÂN SÁCH THÁNG</string>
+    <string name="save_success">Đã lưu và đồng bộ ngân sách lên Firebase!</string>
+    <string name="save_error_over_budget">Ngân sách bị vượt quá tổng thu nhập. Vui lòng điều chỉnh lại!</string>
+    
+    <!-- Screen 6 Strings -->
+    <string name="title_screen_6">DANH SÁCH HẠN MỨC TRỰC QUAN</string>
+    <string name="limit_label">Hạn mức: %1$s</string>
+    <string name="spent_label">Đã tiêu: %1$s</string>
+    <string name="status_safe">Còn lại: %1$s (An toàn)</string>
+    <string name="status_warning">Còn lại: %1$s (Cảnh báo)</string>
+    <string name="status_danger">Còn lại: %1$s (Vượt hạn mức)</string>
+</resources>
