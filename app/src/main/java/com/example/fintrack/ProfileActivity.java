@@ -36,7 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView txtUserEmail;
 
     private Button btnSave;
-    private Button btnLogout;
+    private ImageButton btnBack;
 
     private ImageButton btnChooseAvatar;
     private ImageView imgAvatar;
@@ -69,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity {
         edtConfirmPassword = findViewById(R.id.edt_m2_confirm_password);
 
         btnSave = findViewById(R.id.btn_m2_save);
-        btnLogout = findViewById(R.id.btn_logout);
+        btnBack = findViewById(R.id.btn_profile_back);
 
         loadData();
 
@@ -98,22 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         btnSave.setOnClickListener(v -> saveProfile());
 
-        btnLogout.setOnClickListener(v -> {
-
-            FirebaseAuth.getInstance().signOut();
-
-            Intent intent =
-                    new Intent(ProfileActivity.this,
-                            LoginActivity.class);
-
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-            startActivity(intent);
-
-            finish();
-
-        });
+        btnBack.setOnClickListener(v -> finish());
 
     }
 

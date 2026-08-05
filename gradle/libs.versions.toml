@@ -13,8 +13,19 @@ googleGmsGoogleServices = "4.5.0"
 firebaseFirestore = "26.4.1"
 navigation = "2.9.8"
 firebaseDatabase = "22.0.1"
+playServicesAuth = "21.1.1"
+googleApiHttpClient = "1.43.3"
+googleApiServicesDrive = "v3-rev20230822-2.0.0"
+googleApiClient = "2.2.0"
 
 [libraries]
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
+google-api-client = { group = "com.google.api-client", name = "google-api-client", version.ref = "googleApiClient" }
+google-api-client-android = { group = "com.google.api-client", name = "google-api-client-android", version.ref = "googleApiClient" }
+google-api-client-gson = { group = "com.google.api-client", name = "google-api-client-gson", version.ref = "googleApiClient" }
+google-api-services-drive = { group = "com.google.apis", name = "google-api-services-drive", version.ref = "googleApiServicesDrive" }
+google-http-client-gson = { group = "com.google.http-client", name = "google-http-client-gson", version.ref = "googleApiHttpClient" }
+google-http-client-android = { group = "com.google.http-client", name = "google-http-client-android", version.ref = "googleApiHttpClient" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

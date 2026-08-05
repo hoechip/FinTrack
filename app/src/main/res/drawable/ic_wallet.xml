@@ -1,0 +1,25 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Green money bill sticking out -->
+    <path
+        android:fillColor="#81C784"
+        android:pathData="M12,10 L36,10 C38,10 39,11 39,13 L39,18 L9,18 L9,13 C9,11 10,10 12,10 Z" />
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M15,13 L33,13 C34,13 35,13.5 35,14.5 L35,18 L13,18 L13,14.5 C13,13.5 14,13 15,13 Z" />
+    <!-- Wallet body -->
+    <path
+        android:fillColor="#00A86B"
+        android:pathData="M6,16 C6,13.8 7.8,12 10,12 L38,12 C40.2,12 42,13.8 42,16 L42,36 C42,38.2 40.2,40 38,40 L10,40 C7.8,40 6,38.2 6,36 Z" />
+    <!-- Wallet flap / clasp -->
+    <path
+        android:fillColor="#008A56"
+        android:pathData="M30,22 L42,22 C42,22 42,30 42,30 L30,30 C27.8,30 26,28.2 26,26 C26,23.8 27.8,22 30,22 Z" />
+    <!-- Clasp metal pin -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M31,26 A2,2 0 1,0 35,26 A2,2 0 1,0 31,26" />
+</vector>

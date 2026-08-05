@@ -39,12 +39,32 @@
             android:name=".ProfileActivity"
             android:exported="false" />
 
-        <!-- Activity chính chứa giao diện khung -->
         <activity
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.FinTrack"
             android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".AddTransactionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FinTrack"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+
+        <!-- Thêm 3 Activity Quản lý mục tiêu tiết kiệm của Bích Ngọc -->
+        <activity
+            android:name=".M9DanhSachMucTieuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TaoMucTieuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChiTietMucTieuActivity"
+            android:exported="false" />
 
     </application>
 

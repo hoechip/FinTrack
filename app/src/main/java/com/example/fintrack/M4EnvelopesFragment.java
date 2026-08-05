@@ -14,6 +14,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.fintrack.databinding.FragmentSecondBinding;
+import com.example.fintrack.data.FirebaseHelper;
+import com.example.fintrack.model.KeHoachNganSach;
+import com.example.fintrack.model.PhongBi;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +31,7 @@ public class M4EnvelopesFragment extends Fragment {
     private FragmentSecondBinding binding;
     private List<Envelope> envelopeList;
     private EnvelopeAdapter adapter;
-    private DatabaseReference mDatabase;
+    private FirebaseHelper firebaseHelper;
 
     @Override
     public View onCreateView(
@@ -36,7 +39,7 @@ public class M4EnvelopesFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         binding = FragmentSecondBinding.inflate(inflater, container, false);
-        mDatabase = FirebaseDatabase.getInstance().getReference("envelopes");
+        firebaseHelper = FirebaseHelper.layThucThe();
         return binding.getRoot();
     }
 
@@ -76,25 +79,45 @@ public class M4EnvelopesFragment extends Fragment {
     }
 
     private void listenToFirebase() {
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        firebaseHelper.langNgheKeHoachNganSach(new FirebaseHelper.LangNgheDuLieu() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                envelopeList.clear();
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Envelope envelope = postSnapshot.getValue(Envelope.class);
-                    if (envelope != null) {
-                        envelopeList.add(envelope);
+            public void onDuLieu(KeHoachNganSach keHoach) {
+                if (keHoach != null && keHoach.getDanhSachPhongBi() != null) {
+                    envelopeList.clear();
+                    for (PhongBi pb : keHoach.getDanhSachPhongBi()) {
+                        envelopeList.add(chuyenPhongBiSangEnvelope(pb));
                     }
+                    adapter.notifyDataSetChanged();
                 }
-                adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Lỗi tải dữ liệu: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onError(String loi) {
+                Toast.makeText(getContext(), "Lỗi tải dữ liệu: " + loi, Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    private Envelope chuyenPhongBiSangEnvelope(PhongBi pb) {
+        Envelope envelope = new Envelope(pb.getId(), pb.getTenHangMuc(), (int) pb.getDaTieu(), (int) pb.getHanMuc(), pb.getLoaiIcon(), null, 0);
+        
+        // Map loaiIcon string to drawable resource
+        int iconRes = R.drawable.ic_wallet;
+        if (pb.getLoaiIcon() != null) {
+            switch (pb.getLoaiIcon()) {
+                case "food": iconRes = R.drawable.ic_food; break;
+                case "house": iconRes = R.drawable.ic_home; break;
+                case "bus": iconRes = R.drawable.ic_car; break;
+                case "lightning": iconRes = R.drawable.ic_bulb; break;
+                case "gamepad": iconRes = R.drawable.ic_gamepad; break;
+                case "shopping": iconRes = R.drawable.ic_shopping; break;
+            }
+        }
+        envelope.setIconRes(iconRes);
+        return envelope;
+    }
+
+    private String selectedIconTag = "food";
 
     private void showAddEditDialog(Envelope envelope, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -103,28 +126,58 @@ public class M4EnvelopesFragment extends Fragment {
 
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_edit_envelope, null);
         final EditText input = dialogView.findViewById(R.id.edit_envelope_name);
+        final androidx.recyclerview.widget.RecyclerView rvIcons = dialogView.findViewById(R.id.rv_icon_selection);
 
         if (isEdit) {
             input.setText(envelope.getName());
             input.setSelection(input.getText().length());
+            selectedIconTag = envelope.getIconName() != null ? envelope.getIconName() : "food";
+        } else {
+            selectedIconTag = "food";
         }
+
+        // Danh sách icon phong phú và không bị lặp lại
+        java.util.List<String> iconTags = java.util.Arrays.asList(
+                "food", "home", "car", "bulb", "gamepad", "shopping", "wallet",
+                "movie", "person", "calendar_today", "history", "settings"
+        );
+
+        IconSelectionAdapter iconAdapter = new IconSelectionAdapter(iconTags, selectedIconTag, tag -> {
+            selectedIconTag = tag;
+        });
+        
+        rvIcons.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(getContext(), 
+                androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false));
+        rvIcons.setAdapter(iconAdapter);
+        
         builder.setView(dialogView);
 
         builder.setPositiveButton(isEdit ? "Cập nhật" : "Thêm", (dialog, which) -> {
             String name = input.getText().toString().trim();
+            
             if (!name.isEmpty()) {
+                KeHoachNganSach keHoach = firebaseHelper.layKeHoachHienTai();
+                if (keHoach == null) return;
+                
+                ArrayList<PhongBi> danhSach = keHoach.getDanhSachPhongBi();
                 if (isEdit) {
-                    // Cập nhật trên Firebase
-                    envelope.setName(name);
-                    mDatabase.child(envelope.getId()).setValue(envelope);
-                } else {
-                    // Thêm mới vào Firebase
-                    String id = mDatabase.push().getKey();
-                    Envelope newEnv = new Envelope(id, name, R.drawable.ic_food_thin);
-                    if (id != null) {
-                        mDatabase.child(id).setValue(newEnv);
+                    for (PhongBi pb : danhSach) {
+                        if (pb.getId().equals(envelope.getId())) {
+                            pb.setTenHangMuc(name);
+                            pb.setLoaiIcon(selectedIconTag);
+                            break;
+                        }
                     }
+                } else {
+                    String id = String.valueOf(System.currentTimeMillis());
+                    danhSach.add(new PhongBi(id, name, selectedIconTag, 0L, 0L));
                 }
+                
+                firebaseHelper.luuKeHoachNganSach(keHoach, task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getContext(), isEdit ? "Đã cập nhật" : "Đã thêm phong bì", Toast.LENGTH_SHORT).show();
+                    }
+                });
             } else {
                 Toast.makeText(getContext(), "Tên không được để trống", Toast.LENGTH_SHORT).show();
             }
@@ -138,10 +191,21 @@ public class M4EnvelopesFragment extends Fragment {
                 .setTitle("Xác nhận xóa")
                 .setMessage("Bạn có chắc chắn muốn xóa phong bì \"" + envelope.getName() + "\"?")
                 .setPositiveButton("Xóa", (dialog, which) -> {
-                    // Xóa trên Firebase
-                    mDatabase.child(envelope.getId()).removeValue()
-                        .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Đã xóa", Toast.LENGTH_SHORT).show())
-                        .addOnFailureListener(e -> Toast.makeText(getContext(), "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    KeHoachNganSach keHoach = firebaseHelper.layKeHoachHienTai();
+                    if (keHoach != null && keHoach.getDanhSachPhongBi() != null) {
+                        ArrayList<PhongBi> danhSach = keHoach.getDanhSachPhongBi();
+                        for (int i = 0; i < danhSach.size(); i++) {
+                            if (danhSach.get(i).getId().equals(envelope.getId())) {
+                                danhSach.remove(i);
+                                break;
+                            }
+                        }
+                        firebaseHelper.luuKeHoachNganSach(keHoach, task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), "Đã xóa", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 })
                 .setNegativeButton("Hủy", null)
                 .show();

@@ -23,8 +23,6 @@
     <string name="auto_backup">Tự động sao lưu</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="msg_in_development">Tính năng đang phát triển</string>
@@ -92,4 +90,33 @@
     <string name="menu_monthly_budget">Ngân sách đầu tháng</string>
     <string name="menu_savings_goals">Mục tiêu tiết kiệm</string>
     <string name="hint_envelope_name">Tên phong bì</string>
+    <string name="title_quick_expense">Thêm chi tiêu nhanh</string>
+    <string name="amount_format">-%s đ</string>
+    <string name="label_select_envelope">Chọn phong bì</string>
+    <string name="btn_save_transaction">LƯU GIAO DỊCH</string>
+    <string name="msg_transaction_saved">Đã lưu giao dịch vào phong bì %s</string>
+    <string name="msg_input_error">Vui lòng nhập số tiền và chọn phong bì</string>
+    <string name="msg_eval_error">Lỗi biểu thức</string>
+    <!-- Navigation Strings (Quỳnh) -->
+    <string name="first_fragment_label">Phân bổ Ngân sách</string>
+    <string name="second_fragment_label">Tiến trình Hạn mức</string>
+    <string name="btn_screen_5">Màn hình 5</string>
+    <string name="btn_screen_6">Màn hình 6</string>
+
+    <!-- Screen 5 Strings -->
+    <string name="title_screen_5">PHÂN BỔ NGÂN SÁCH ĐẦU THÁNG</string>
+    <string name="target_income_label">TỔNG THU NHẬP MỤC TIÊU THÁNG</string>
+    <string name="total_allocated_label">Tổng phân bổ:</string>
+    <string name="remaining_balance_label">SỐ DƯ CÒN LẠI ĐỂ PHÂN BỔ:</string>
+    <string name="save_budget_btn">LƯU NGÂN SÁCH THÁNG</string>
+    <string name="save_success">Đã lưu và đồng bộ ngân sách lên Firebase!</string>
+    <string name="save_error_over_budget">Ngân sách bị vượt quá tổng thu nhập. Vui lòng điều chỉnh lại!</string>
+
+    <!-- Screen 6 Strings -->
+    <string name="title_screen_6">DANH SÁCH HẠN MỨC TRỰC QUAN</string>
+    <string name="limit_label">Hạn mức: %1$s</string>
+    <string name="spent_label">Đã tiêu: %1$s</string>
+    <string name="status_safe">Còn lại: %1$s (An toàn)</string>
+    <string name="status_warning">Còn lại: %1$s (Cảnh báo)</string>
+    <string name="status_danger">Còn lại: %1$s (Vượt hạn mức)</string>
 </resources>

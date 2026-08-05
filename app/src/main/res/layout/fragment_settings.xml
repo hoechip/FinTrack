@@ -45,6 +45,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txt_connect_drive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -76,8 +77,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:thumbTint="@color/emerald_green"
-                    app:trackTint="@color/light_lavender" />
+                    app:thumbTint="@color/switch_thumb_selector"
+                    app:trackTint="@color/switch_track_selector" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

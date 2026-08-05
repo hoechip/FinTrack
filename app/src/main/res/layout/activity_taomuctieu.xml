@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/txt_m11_tieude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tạo mục tiêu tiết kiệm"
+        android:textSize="24sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/edt_m11_ten"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="Tên mục tiêu"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edt_m11_sotienmuctieu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Số tiền mục tiêu"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/edt_m11_sotienhientai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Số tiền hiện tại"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/edt_m11_ngayhanchot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Hạn chót, ví dụ: 30/12/2026"
+        android:inputType="date" />
+
+    <Button
+        android:id="@+id/btn_m11_luu"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/emerald_green"
+        android:text="LƯU MỤC TIÊU"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+</LinearLayout>

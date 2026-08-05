@@ -10,12 +10,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import com.example.fintrack.data.FirebaseHelper;
 import com.example.fintrack.databinding.FragmentStatisticsBinding;
+import com.example.fintrack.model.KeHoachNganSach;
+import com.example.fintrack.model.PhongBi;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,6 +31,7 @@ public class StatisticsFragment extends Fragment {
     private static final String TAG = "StatisticsFragment";
     private FragmentStatisticsBinding binding;
     private FirebaseFirestore db;
+    private FirebaseHelper firebaseHelper;
     private EnvelopeAdapter adapter;
     private List<Envelope> envelopeList;
 
@@ -39,20 +47,81 @@ public class StatisticsFragment extends Fragment {
         }
     }
 
+    private String currentSelectedMonth;
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (binding == null) return;
 
         try {
+            firebaseHelper = FirebaseHelper.layThucThe();
+            currentSelectedMonth = firebaseHelper.layThangHienTai();
             setupRecyclerView();
-            fetchStatistics();
             setupDatePicker();
-            loadFakeEnvelopes();
+            loadMonthData(currentSelectedMonth);
         } catch (Exception e) {
             Log.e(TAG, "Error in onViewCreated", e);
             Toast.makeText(getContext(), "Error loading statistics", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void loadMonthData(String month) {
+        firebaseHelper.langNgheKeHoachNganSach(month, new FirebaseHelper.LangNgheDuLieu() {
+            @Override
+            public void onDuLieu(KeHoachNganSach keHoach) {
+                if (isAdded() && binding != null) {
+                    if (keHoach != null) {
+                        processBudgetData(keHoach);
+                    } else {
+                        // Trường hợp tháng không có dữ liệu
+                        binding.txtM5Balance.setText("đ 0");
+                        binding.pbM5Income.setProgress(0);
+                        binding.pbM5Expense.setProgress(0);
+                        envelopeList.clear();
+                        adapter.notifyDataSetChanged();
+                        Toast.makeText(getContext(), "Không có dữ liệu cho tháng: " + month, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String loi) {
+                Log.e(TAG, "Lỗi nạp dữ liệu tháng " + month + ": " + loi);
+            }
+        });
+    }
+
+    private void processBudgetData(KeHoachNganSach keHoach) {
+        long tongThuNhap = keHoach.getTongThuNhap();
+        long tongDaTieu = 0;
+        
+        ArrayList<PhongBi> phongBis = keHoach.getDanhSachPhongBi();
+        if (phongBis != null) {
+            // Sắp xếp phong bì theo số tiền đã tiêu giảm dần
+            Collections.sort(phongBis, (p1, p2) -> Long.compare(p2.getDaTieu(), p1.getDaTieu()));
+            
+            envelopeList.clear();
+            for (PhongBi pb : phongBis) {
+                tongDaTieu += pb.getDaTieu();
+                envelopeList.add(chuyenPhongBiSangEnvelope(pb));
+            }
+            adapter.notifyDataSetChanged();
+        }
+
+        updateUI(tongThuNhap, tongDaTieu);
+    }
+
+    private Envelope chuyenPhongBiSangEnvelope(PhongBi pb) {
+        // Tái sử dụng logic ánh xạ icon từ các fragment khác
+        int iconRes = R.drawable.ic_wallet;
+        String loaiIcon = pb.getLoaiIcon();
+        if (loaiIcon != null) {
+            int resId = getResources().getIdentifier("ic_" + loaiIcon, "drawable", requireContext().getPackageName());
+            if (resId != 0) iconRes = resId;
+        }
+        
+        return new Envelope(pb.getId(), pb.getTenHangMuc(), (double)pb.getDaTieu(), (double)pb.getHanMuc(), pb.getLoaiIcon(), null, iconRes);
     }
 
     private void setupRecyclerView() {
@@ -62,52 +131,29 @@ public class StatisticsFragment extends Fragment {
         binding.rvM5Envelopes.setAdapter(adapter);
     }
 
-    private void loadFakeEnvelopes() {
-        envelopeList.clear();
-        envelopeList.add(new Envelope("Ăn uống", 4500000, 7000000, "ic_food", "#EB5757"));
-        envelopeList.add(new Envelope("Di chuyển", 2800000, 6000000, "ic_transport", "#BDB76B"));
-        envelopeList.add(new Envelope("Thuê nhà", 2500000, 12500000, "ic_home", "#27AE60"));
-        adapter.notifyDataSetChanged();
-    }
-
     private void setupDatePicker() {
+        if (binding.btnM5DatePicker == null) return;
         binding.btnM5DatePicker.setOnClickListener(v -> {
             MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
-                    .setTitleText("Chọn ngày")
+                    .setTitleText("Chọn tháng")
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .build();
             
             datePicker.addOnPositiveButtonClickListener(selection -> {
-                // Xử lý ngày được chọn
+                Calendar calendar = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"));
+                calendar.setTimeInMillis(selection);
+                
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
+                String selectedMonth = sdf.format(calendar.getTime());
+                
+                if (!selectedMonth.equals(currentSelectedMonth)) {
+                    currentSelectedMonth = selectedMonth;
+                    loadMonthData(currentSelectedMonth);
+                }
             });
 
             datePicker.show(getParentFragmentManager(), "DATE_PICKER");
         });
-    }
-
-    private void fetchStatistics() {
-        if (db == null) return;
-        db.collection("transactions")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && task.getResult() != null) {
-                        double incomeSum = 0;
-                        double expenseSum = 0;
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String type = document.getString("type");
-                            Double amount = document.getDouble("amount");
-                            if (amount != null && type != null) {
-                                switch (type) {
-                                    case "income": incomeSum += amount; break;
-                                    case "expense": expenseSum += amount; break;
-                                }
-                            }
-                        }
-                        updateUI(incomeSum, expenseSum);
-                    } else {
-                        Log.w(TAG, "Error getting documents.", task.getException());
-                    }
-                });
     }
 
     private void updateUI(double income, double expense) {
@@ -117,13 +163,13 @@ public class StatisticsFragment extends Fragment {
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         binding.txtM5Balance.setText(currencyFormat.format(balance));
 
-        double total = income + expense;
-        if (total > 0) {
-            int incomePercent = (int) ((income / total) * 100);
-            int expensePercent = (int) ((expense / total) * 100);
+        if (income > 0) {
+            // Tính toán tỷ lệ phần trăm dựa trên Tổng thu nhập (Bể tiền)
+            int expensePercent = (int) ((expense / income) * 100);
+            int incomePercent = 100 - expensePercent;
 
-            binding.pbM5Income.setProgress(incomePercent);
-            binding.pbM5Expense.setProgress(expensePercent);
+            binding.pbM5Income.setProgress(Math.max(0, incomePercent));
+            binding.pbM5Expense.setProgress(Math.min(100, expensePercent));
         } else {
             binding.pbM5Income.setProgress(0);
             binding.pbM5Expense.setProgress(0);

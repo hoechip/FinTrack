@@ -14,13 +14,12 @@
 
         <ImageView
             android:id="@+id/img_m4_envelope_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_food"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:tint="@color/emerald_green"
             android:contentDescription="Icon phong bì" />
 
         <TextView

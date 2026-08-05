@@ -1,0 +1,14 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+    <!-- Fork (Green) -->
+    <path
+        android:fillColor="#00A86B"
+        android:pathData="M11,5 L11,14 C11,16.2 12.8,18 15,18 L15,31 L17,31 L17,18 C19.2,18 21,16.2 21,14 L21,5 L19,5 L19,13 L17,13 L17,5 L15,5 L15,13 L13,13 L13,5 Z" />
+    <!-- Knife (Green) -->
+    <path
+        android:fillColor="#00A86B"
+        android:pathData="M25,5 C25,5 25,18 23,20 L23,31 L25,31 L25,5 Z M25,5 C27,7 28,11 28,15 L25,15 Z" />
+</vector>

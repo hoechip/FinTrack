@@ -144,68 +144,69 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/txt_m3_title_progress" />
 
-                <!-- Grid Layout for Items -->
+                <!-- Container for Dynamic Spending Items -->
                 <GridLayout
+                    android:id="@+id/gl_m3_spending_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:columnCount="2"
                     android:useDefaultMargins="true"
                     app:layout_constraintTop_toBottomOf="@+id/txt_m3_title_progress">
-
-                    <!-- Ăn uống -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:orientation="vertical"
-                        android:padding="4dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_food" android:textStyle="bold" android:textColor="@color/text_dark" android:textSize="13sp"/>
-                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="6dp" android:progress="75" android:progressTint="@color/emerald_green" android:layout_marginTop="6dp"/>
-                    </LinearLayout>
-
-                    <!-- Di chuyển -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:orientation="vertical"
-                        android:padding="4dp">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_transport" android:textStyle="bold" android:textColor="@color/text_dark" android:textSize="13sp"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="@string/limit_transport" android:textSize="11sp" android:textColor="@color/text_muted"/>
-                        </RelativeLayout>
-                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="6dp" android:progress="45" android:progressTint="@color/emerald_green" android:layout_marginTop="6dp"/>
-                    </LinearLayout>
-
-                    <!-- Mua sắm -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:orientation="vertical"
-                        android:padding="4dp"
-                        android:layout_marginTop="12dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cat_shopping" android:textStyle="bold" android:textColor="@color/text_dark" android:textSize="13sp"/>
-                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="6dp" android:progress="30" android:progressTint="@color/emerald_green" android:layout_marginTop="6dp"/>
-                    </LinearLayout>
-
-                    <!-- Shopping Limit info -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:gravity="end"
-                        android:layout_marginTop="12dp"
-                        android:padding="4dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/limit_shopping" android:textSize="11sp" android:textColor="@color/text_muted" android:layout_marginTop="20dp"/>
-                    </LinearLayout>
                 </GridLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- 3. RECENT TRANSACTIONS CARD -->
+        <!-- 3. SAVINGS GOALS CARD -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_m3_savings_goals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="6dp"
+            app:layout_constraintTop_toBottomOf="@+id/card_m3_spending_progress">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/txt_m3_title_savings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/menu_savings_goals"
+                    android:textColor="@color/text_dark"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/btn_m3_view_all_savings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_view_all"
+                    android:textColor="@color/emerald_green"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txt_m3_title_savings" />
+
+                <LinearLayout
+                    android:id="@+id/ll_m3_savings_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_m3_title_savings" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 4. RECENT TRANSACTIONS CARD -->
         <androidx.cardview.widget.CardView
             android:id="@+id/card_m3_recent_transactions"
             android:layout_width="match_parent"
@@ -215,7 +216,7 @@
             android:layout_marginBottom="40dp"
             app:cardCornerRadius="24dp"
             app:cardElevation="6dp"
-            app:layout_constraintTop_toBottomOf="@+id/card_m3_spending_progress">
+            app:layout_constraintTop_toBottomOf="@+id/card_m3_savings_goals">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

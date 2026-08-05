@@ -15,14 +15,15 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.fintrack.data.FirebaseHelper;
 import com.example.fintrack.databinding.ActivityMainBinding;
-import com.google.android.material.snackbar.Snackbar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private FirebaseHelper firebaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +33,26 @@ public class MainActivity extends AppCompatActivity {
         try {
             binding = ActivityMainBinding.inflate(getLayoutInflater());
             setContentView(binding.getRoot());
-            Log.d(TAG, "onCreate: Layout inflated and set");
 
             setSupportActionBar(binding.toolbarMainTop);
 
+            // 1. Khởi tạo Firebase Helper từ nhánh của Quỳnh
+            try {
+                firebaseHelper = FirebaseHelper.layThucThe();
+                if (firebaseHelper != null) {
+                    firebaseHelper.langNgheKeHoachNganSach(null);
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Lỗi khởi tạo FirebaseHelper: ", e);
+            }
+
+            // 2. Cấu hình Navigation Component
             NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.nav_host_fragment_content_main);
 
             if (navHostFragment != null) {
                 NavController navController = navHostFragment.getNavController();
-                
-                // Setup AppBarConfiguration
+
                 appBarConfiguration = new AppBarConfiguration.Builder(
                         R.id.m3_dashboard, R.id.m4_envelopes, R.id.fragment_chart, R.id.fragment_history, R.id.fragment_settings)
                         .setOpenableLayout(binding.drawerLayout)
@@ -52,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 NavigationUI.setupWithNavController(binding.bottomNav, navController);
                 NavigationUI.setupWithNavController(binding.navViewDrawer, navController);
 
-                // Setup Profile click in Drawer Header
+                // Mở ProfileActivity từ Header của Navigation Drawer
                 View headerView = binding.navViewDrawer.getHeaderView(0);
                 if (headerView != null) {
                     View imgAvatar = headerView.findViewById(R.id.img_nav_header_avatar);
@@ -65,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
+                // Ẩn / Hiện BottomNav & FAB theo Màn hình
                 navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
                     Log.d(TAG, "onDestinationChanged: " + destination.getLabel());
                     if (destination.getId() == R.id.m4_envelopes) {
@@ -77,16 +88,23 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
 
-            binding.fabM3Add.setOnClickListener(v ->
-                    Snackbar.make(v, getString(R.string.msg_in_development), Snackbar.LENGTH_LONG)
-                            .setAnchorView(binding.fabM3Add)
-                            .setAction("Action", null).show()
-            );
+            // 4. Nút FAB mở màn hình Thêm giao dịch
+            binding.fabM3Add.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, AddTransactionActivity.class);
+                startActivity(intent);
+            });
 
         } catch (Exception e) {
             Log.e(TAG, "Error in onCreate", e);
         }
     }
+
+    // Xử lý chuyển Fragment Ngân sách từ code của Quỳnh
+    @Override
+    public void onClick(View v) {
+        // Xử lý sự kiện click nếu cần
+    }
+
 
     public void openDrawer() {
         if (binding != null && binding.drawerLayout != null) {

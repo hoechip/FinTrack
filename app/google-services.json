@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "1001574879809",
-    "project_id": "fintrack-8baf3",
-    "storage_bucket": "fintrack-8baf3.firebasestorage.app"
+    "project_number": "195026938099",
+    "firebase_url": "https://fintrackhue-default-rtdb.firebaseio.com",
+    "project_id": "fintrackhue",
+    "storage_bucket": "fintrackhue.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1001574879809:android:5890a03e736486548eecc0",
+        "mobilesdk_app_id": "1:195026938099:android:1889f04ce0e5e8913c6f86",
         "android_client_info": {
           "package_name": "com.example.fintrack"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA-SrPO-OhW5nbEtZJ9UzuAH5mRQTZY62k"
+          "current_key": "AIzaSyC2F7XSx3-nxiF3Bx1XER8uN9ZnyR3kVY0"
         }
       ],
       "services": {

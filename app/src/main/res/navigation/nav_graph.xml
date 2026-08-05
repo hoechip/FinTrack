@@ -33,8 +33,9 @@
 
     <fragment
         android:id="@+id/fragment_history"
-        android:name="com.example.fintrack.PlaceholderFragment"
-        android:label="@string/menu_history" />
+        android:name="com.example.fintrack.HistoryFragment"
+        android:label="@string/menu_history"
+        tools:layout="@layout/activity_search" />
 
     <fragment
         android:id="@+id/fragment_settings"
@@ -44,12 +45,19 @@
 
     <fragment
         android:id="@+id/fragment_monthly_budget"
-        android:name="com.example.fintrack.PlaceholderFragment"
-        android:label="@string/menu_monthly_budget" />
+        android:name="com.example.fintrack.PhanBoNganSachFragment"
+        android:label="@string/menu_monthly_budget"
+        tools:layout="@layout/fragment_phan_bo_ngan_sach" />
 
     <fragment
-        android:id="@+id/fragment_savings_goals"
-        android:name="com.example.fintrack.PlaceholderFragment"
-        android:label="@string/menu_savings_goals" />
+        android:id="@+id/fragment_budget_progress"
+        android:name="com.example.fintrack.TienDoNganSachFragment"
+        android:label="@string/title_screen_6"
+        tools:layout="@layout/fragment_tien_do_ngan_sach" />
 
+    <activity
+        android:id="@+id/fragment_savings_goals"
+        android:name="com.example.fintrack.M9DanhSachMucTieuActivity"
+        android:label="@string/menu_savings_goals"
+        tools:layout="@layout/activity_m9_danhsachmuctieu" />
 </navigation>

@@ -122,7 +122,19 @@ public class EnvelopeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public void bind(Envelope item, int position, OnEnvelopeActionListener listener) {
             binding.txtM4EnvelopeName.setText(item.getName());
-            binding.imgM4EnvelopeIcon.setImageResource(item.getIconRes());
+            
+            // Hiển thị icon màu sắc
+            if (item.getIconName() != null) {
+                int iconResId = binding.getRoot().getContext().getResources().getIdentifier(
+                        "ic_" + item.getIconName(), "drawable", binding.getRoot().getContext().getPackageName());
+                if (iconResId != 0) {
+                    binding.imgM4EnvelopeIcon.setImageResource(iconResId);
+                } else {
+                    binding.imgM4EnvelopeIcon.setImageResource(R.drawable.ic_wallet);
+                }
+            } else if (item.getIconRes() != 0) {
+                binding.imgM4EnvelopeIcon.setImageResource(item.getIconRes());
+            }
 
             binding.btnM4EnvelopeEdit.setOnClickListener(v -> {
                 if (listener != null) listener.onEdit(item, position);

@@ -6,17 +6,31 @@
     android:layout_height="wrap_content"
     android:paddingVertical="12dp">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/img_m3_item_icon"
+    <FrameLayout
+        android:id="@+id/fl_m3_item_icon_container"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="#FFF3E0"
-        android:padding="12dp"
-        android:src="@android:drawable/ic_menu_gallery"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/CircleImage" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_m3_item_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFF3E0"
+            android:padding="12dp"
+            android:src="@android:drawable/ic_menu_gallery"
+            app:shapeAppearanceOverlay="@style/CircleImage" />
+
+        <TextView
+            android:id="@+id/tv_m3_item_emoji"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/txt_m3_item_title"
@@ -29,7 +43,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txt_m3_item_date"
         app:layout_constraintEnd_toStartOf="@+id/txt_m3_item_amount"
-        app:layout_constraintStart_toEndOf="@+id/img_m3_item_icon"
+        app:layout_constraintStart_toEndOf="@+id/fl_m3_item_icon_container"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
