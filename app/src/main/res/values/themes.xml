@@ -1,0 +1,42 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ThemGD_traCuu" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">#F0F2F5</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="Theme.ThemGD_traCuu" parent="Base.Theme.ThemGD_traCuu" />
+
+    <style name="CalcButton" parent="Widget.Material3.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">42dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Rounded.Calculator</item>
+    </style>
+
+    <style name="ShapeAppearance.Rounded.Calculator" parent="">
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="CalcButton.Num">
+        <item name="backgroundTint">#FFFFFF</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+
+    <style name="CalcButton.Op">
+        <item name="backgroundTint">#E5E7EB</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+
+    <style name="CalcButton.Green">
+        <item name="backgroundTint">#00A86B</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+</resources>

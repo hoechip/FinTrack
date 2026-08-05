@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">themGD_traCuu</string>
+    <string name="title_quick_expense">Thêm chi tiêu nhanh</string>
+    <string name="amount_format">-%s đ</string>
+    <string name="label_select_envelope">Chọn phong bì</string>
+    <string name="btn_save_transaction">LƯU GIAO DỊCH</string>
+    <string name="msg_transaction_saved">Đã lưu giao dịch vào phong bì %s</string>
+    <string name="msg_input_error">Vui lòng nhập số tiền và chọn phong bì</string>
+    <string name="msg_eval_error">Lỗi biểu thức</string>
+</resources>
