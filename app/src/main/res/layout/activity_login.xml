@@ -17,7 +17,7 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginTop="40dp"
-            android:src="@drawable/diamond_logo"
+            android:src="@drawable/ic_app_logo"
             android:contentDescription="Logo FinTrack"
             android:scaleType="fitCenter"
             app:layout_constraintTop_toTopOf="parent"

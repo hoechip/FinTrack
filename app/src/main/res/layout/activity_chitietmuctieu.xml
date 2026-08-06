@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_gray"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_m10_chitiet"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back_thin"
         app:title="Chi tiết mục tiêu"
         app:titleTextColor="@color/text_dark" />
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/btn_m10_boong"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_m10_chitiet">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +38,7 @@
                 android:id="@+id/txt_m10_ten"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mua Laptop mới"
+                android:text="Tên mục tiêu"
                 android:textColor="@color/text_dark"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -53,7 +61,7 @@
                         android:id="@+id/txt_m10_datichluy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Đã tích lũy: +3.500.000 đ"
+                        android:text="Đã tích lũy: +0 đ"
                         android:textColor="@color/success_green"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -63,7 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="Còn thiếu: -11.500.000 đ"
+                        android:text="Còn thiếu: -0 đ"
                         android:textColor="@color/soft_red"
                         android:textSize="16sp" />
 
@@ -74,7 +82,7 @@
                         android:layout_height="12dp"
                         android:layout_marginTop="16dp"
                         android:max="100"
-                        android:progress="25"
+                        android:progress="0"
                         android:progressTint="@color/success_green" />
 
                     <TextView
@@ -82,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="25%"
+                        android:text="0%"
                         android:textColor="@color/success_green"
                         android:textStyle="bold" />
 
@@ -97,7 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Hạn chót: 30/12/2026"
+                        android:text="Hạn chót: --/--/----"
                         android:textColor="@color/text_gray" />
 
                     <TextView
@@ -105,7 +113,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="Còn 150 ngày"
+                        android:text="Còn 0 ngày"
                         android:textColor="@color/text_gray"
                         android:textStyle="bold" />
 
@@ -119,12 +127,15 @@
 
     <Button
         android:id="@+id/btn_m10_boong"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_margin="16dp"
         android:backgroundTint="@color/emerald_green"
         android:text="BỎ ỐNG TIẾT KIỆM"
         android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

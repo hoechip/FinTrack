@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_gray"
     android:fillViewport="true"
+    android:fitsSystemWindows="false"
     tools:context=".FirstFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +18,7 @@
         <View
             android:id="@+id/view_m3_header_bg"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="280dp"
             android:background="@color/emerald_green"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,25 +27,25 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/desc_menu"
             android:src="@drawable/ic_menu_hamburger"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_m3_dashboard_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txt_m3_dashboard_title" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txt_m3_dashboard_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:text="@string/dashboard_title"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_m3_menu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/btn_m3_menu" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img_m3_avatar"

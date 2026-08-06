@@ -1,5 +1,6 @@
 package com.example.fintrack.model;
 
+import com.google.firebase.database.Exclude;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -32,6 +33,7 @@ public class KeHoachNganSach implements Serializable {
     public long getThoiGianCapNhat() { return thoiGianCapNhat; }
     public void setThoiGianCapNhat(long thoiGianCapNhat) { this.thoiGianCapNhat = thoiGianCapNhat; }
 
+    @Exclude
     public long tinhTongPhanBo() {
         long tong = 0;
         if (danhSachPhongBi != null) {
@@ -42,6 +44,7 @@ public class KeHoachNganSach implements Serializable {
         return tong;
     }
 
+    @Exclude
     public long tinhSoDuConLai() {
         return tongThuNhap - tinhTongPhanBo();
     }

@@ -1,5 +1,6 @@
 package com.example.fintrack.model;
 
+import com.google.firebase.database.Exclude;
 import java.io.Serializable;
 
 public class PhongBi implements Serializable {
@@ -34,11 +35,13 @@ public class PhongBi implements Serializable {
     public long getDaTieu() { return daTieu; }
     public void setDaTieu(long daTieu) { this.daTieu = daTieu; }
 
+    @Exclude
     public int getPhanTramDaTieu() {
         if (hanMuc <= 0) return daTieu > 0 ? 100 : 0;
         return (int) Math.round(((double) daTieu / (double) hanMuc) * 100);
     }
 
+    @Exclude
     public long getSoDuConLai() {
         return hanMuc - daTieu;
     }

@@ -20,7 +20,7 @@ import java.util.Locale;
 public class FirebaseHelper {
 
     private static final String TAG = "FirebaseHelper";
-    private static final String URL_FIREBASE = "https://quynh-e97e6-default-rtdb.asia-southeast1.firebasedatabase.app";
+    private static final String URL_FIREBASE = "https://fintrackhue-default-rtdb.firebaseio.com";
     private static final String NUT_NGAN_SACH = "envelope_budgets";
 
     private static FirebaseHelper thucThe;

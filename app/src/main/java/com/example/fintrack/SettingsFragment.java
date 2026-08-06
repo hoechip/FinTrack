@@ -46,12 +46,8 @@ public class SettingsFragment extends Fragment {
         driveSignInLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
-                        handleSignInResult(task);
-                    } else {
-                        Toast.makeText(getContext(), "Đăng nhập Google thất bại", Toast.LENGTH_SHORT).show();
-                    }
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+                    handleSignInResult(task);
                 }
         );
 
@@ -71,7 +67,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        binding.txtConnectDrive.setOnClickListener(v -> {
+        binding.btnConnectDrive.setOnClickListener(v -> {
             com.google.android.gms.common.GoogleApiAvailability availability = com.google.android.gms.common.GoogleApiAvailability.getInstance();
             int resultCode = availability.isGooglePlayServicesAvailable(requireContext());
             if (resultCode != com.google.android.gms.common.ConnectionResult.SUCCESS) {
@@ -125,9 +121,18 @@ public class SettingsFragment extends Fragment {
     private void updateDriveUI() {
         GoogleSignInAccount account = driveHelper.getSignedInAccount();
         if (account != null) {
-            binding.txtConnectDrive.setText("Đã kết nối: " + account.getEmail());
+            binding.txtDriveStatus.setText("Đã kết nối: " + account.getEmail());
+            binding.btnConnectDrive.setText("Quản lý kết nối");
+            binding.btnConnectDrive.setIconResource(R.drawable.ic_settings);
+            // Đổi màu nút khi đã kết nối để phân biệt
+            binding.btnConnectDrive.setIconTintResource(R.color.text_secondary);
+            binding.btnConnectDrive.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.text_secondary));
         } else {
-            binding.txtConnectDrive.setText("Chưa kết nối Google Drive");
+            binding.txtDriveStatus.setText("Chưa kết nối Google Drive");
+            binding.btnConnectDrive.setText("Kết nối Google Drive");
+            binding.btnConnectDrive.setIconResource(R.drawable.ic_link);
+            binding.btnConnectDrive.setIconTintResource(R.color.emerald_green);
+            binding.btnConnectDrive.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.emerald_green));
             binding.switchAutoBackup.setChecked(false);
         }
     }
