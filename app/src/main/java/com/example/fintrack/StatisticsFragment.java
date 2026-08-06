@@ -72,10 +72,18 @@ public class StatisticsFragment extends Fragment {
             public void onDuLieu(KeHoachNganSach keHoach) {
                 if (isAdded() && binding != null) {
                     if (keHoach != null) {
+                        // Cập nhật text hiển thị tháng
+                        String[] parts = month.split("-");
+                        if (parts.length == 2) {
+                            binding.txtM5SelectedMonth.setText("Tháng " + parts[1] + "/" + parts[0]);
+                        }
                         processBudgetData(keHoach);
                     } else {
                         // Trường hợp tháng không có dữ liệu
-                        binding.txtM5Balance.setText("đ 0");
+                        binding.txtM5SelectedMonth.setText("Tháng --/----");
+                        binding.txtM5Balance.setText("0 đ");
+                        binding.txtM5TotalIncome.setText("0 đ");
+                        binding.txtM5TotalExpense.setText("0 đ");
                         binding.pbM5Income.setProgress(0);
                         binding.pbM5Expense.setProgress(0);
                         envelopeList.clear();
@@ -161,15 +169,31 @@ public class StatisticsFragment extends Fragment {
 
         double balance = income - expense;
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        
         binding.txtM5Balance.setText(currencyFormat.format(balance));
+        binding.txtM5TotalIncome.setText(currencyFormat.format(income));
+        binding.txtM5TotalExpense.setText(currencyFormat.format(expense));
 
         if (income > 0) {
-            // Tính toán tỷ lệ phần trăm dựa trên Tổng thu nhập (Bể tiền)
-            int expensePercent = (int) ((expense / income) * 100);
-            int incomePercent = 100 - expensePercent;
+            // Sử dụng tỉ lệ 1000 để tăng độ chính xác cao hơn, tránh khoảng trắng do làm tròn số
+            double expenseRatio = expense / income;
+            if (expenseRatio > 1.0) expenseRatio = 1.0;
+            
+            int expenseProgress = (int) (expenseRatio * 1000);
+            int incomeProgress = 1000 - expenseProgress;
 
-            binding.pbM5Income.setProgress(Math.max(0, incomePercent));
-            binding.pbM5Expense.setProgress(Math.min(100, expensePercent));
+            binding.pbM5Expense.setProgress(expenseProgress);
+            binding.pbM5Income.setProgress(incomeProgress);
+
+            // Cập nhật rotation động để các đoạn biểu đồ nối tiếp nhau hoàn hảo
+            // Chi tiêu (Đỏ) luôn bắt đầu từ đỉnh 12h (-90 độ)
+            binding.pbM5Expense.setRotation(-90f);
+
+            // Thu nhập (Xanh) bắt đầu ngay tại vị trí Chi tiêu kết thúc
+            // 1 đơn vị progress (trên thang 1000) tương ứng với 0.36 độ (360/1000)
+            float incomeRotation = -90f + (expenseProgress * 0.36f);
+            binding.pbM5Income.setRotation(incomeRotation);
+
         } else {
             binding.pbM5Income.setProgress(0);
             binding.pbM5Expense.setProgress(0);

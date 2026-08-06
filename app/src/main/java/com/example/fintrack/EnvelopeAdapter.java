@@ -84,14 +84,22 @@ public class EnvelopeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             binding.pbItemEnvelopeProgress.setProgress(envelope.getPercent());
 
             // Set Icon
-            if (envelope.getIconName() != null) {
+            String iconName = envelope.getIconName();
+            if (iconName != null && !iconName.isEmpty()) {
+                // Thử tìm icon với tiền tố ic_ (ví dụ: ic_food)
+                String resName = iconName.startsWith("ic_") ? iconName : "ic_" + iconName;
                 int iconResId = binding.getRoot().getContext().getResources().getIdentifier(
-                        envelope.getIconName(), "drawable", binding.getRoot().getContext().getPackageName());
+                        resName, "drawable", binding.getRoot().getContext().getPackageName());
+                
                 if (iconResId != 0) {
                     binding.imgItemEnvelopeIcon.setImageResource(iconResId);
+                } else {
+                    binding.imgItemEnvelopeIcon.setImageResource(R.drawable.ic_wallet);
                 }
             } else if (envelope.getIconRes() != 0) {
                 binding.imgItemEnvelopeIcon.setImageResource(envelope.getIconRes());
+            } else {
+                binding.imgItemEnvelopeIcon.setImageResource(R.drawable.ic_wallet);
             }
 
             if (envelope.getColorHex() != null) {

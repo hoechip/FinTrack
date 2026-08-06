@@ -41,6 +41,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txt_m5_title" />
 
+        <TextView
+            android:id="@+id/txt_m5_selected_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:text="Tháng --/----"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_m5_title" />
+
         <!-- Donut Chart Placeholder -->
         <FrameLayout
             android:id="@+id/layout_m5_chart_container"
@@ -52,13 +64,23 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_m5_title">
 
             <ProgressBar
+                android:id="@+id/pb_m5_background"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:indeterminate="false"
+                android:max="1000"
+                android:progress="1000"
+                android:progressDrawable="@drawable/ring_background" />
+
+            <ProgressBar
                 android:id="@+id/pb_m5_expense"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:indeterminate="false"
-                android:max="100"
-                android:progress="60"
+                android:max="1000"
+                android:progress="0"
                 android:progressDrawable="@drawable/ring_expense"
                 android:rotation="-90" />
 
@@ -68,10 +90,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:indeterminate="false"
-                android:max="100"
-                android:progress="40"
+                android:max="1000"
+                android:progress="0"
                 android:progressDrawable="@drawable/ring_income"
-                android:rotation="126" />
+                android:rotation="0" />
 
             <TextView
                 android:id="@+id/txt_m5_balance"
@@ -86,42 +108,92 @@
 
         <LinearLayout
             android:id="@+id/layout_m5_legend"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="24dp"
             android:orientation="horizontal"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_m5_chart_container">
 
-            <View
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/shape_legend_income" />
-
-            <TextView
-                android:id="@+id/txt_m5_income_legend"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/income_legend"
-                android:textColor="@color/black" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <View
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:background="@drawable/shape_legend_income" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/income_legend"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_m5_total_income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="0 đ"
+                    android:textColor="@color/success_green"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <View
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="24dp"
-                android:background="@drawable/shape_legend_expense" />
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@color/divider_gray" />
 
-            <TextView
-                android:id="@+id/txt_m5_expense_legend"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/expense_legend"
-                android:textColor="@color/black" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <View
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:background="@drawable/shape_legend_expense" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/expense_legend"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_m5_total_expense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="0 đ"
+                    android:textColor="@color/soft_red"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
