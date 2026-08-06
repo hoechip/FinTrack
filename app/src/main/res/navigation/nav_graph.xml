@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/m3_dashboard">
+
+    <fragment
+        android:id="@+id/m3_dashboard"
+        android:name="com.example.fintrack.M3DashboardFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_first">
+        <action
+            android:id="@+id/action_m3_to_m4"
+            app:destination="@id/m4_envelopes" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/m4_envelopes"
+        android:name="com.example.fintrack.M4EnvelopesFragment"
+        android:label="@string/menu_manage_envelopes"
+        tools:layout="@layout/fragment_second">
+        <action
+            android:id="@+id/action_m4_to_m3"
+            app:destination="@id/m3_dashboard" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_chart"
+        android:name="com.example.fintrack.StatisticsFragment"
+        android:label="@string/menu_stats"
+        tools:layout="@layout/fragment_statistics" />
+
+    <fragment
+        android:id="@+id/fragment_history"
+        android:name="com.example.fintrack.HistoryFragment"
+        android:label="@string/menu_history"
+        tools:layout="@layout/activity_search" />
+
+    <fragment
+        android:id="@+id/fragment_settings"
+        android:name="com.example.fintrack.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/fragment_monthly_budget"
+        android:name="com.example.fintrack.PhanBoNganSachFragment"
+        android:label="@string/menu_monthly_budget"
+        tools:layout="@layout/fragment_phan_bo_ngan_sach" />
+
+    <fragment
+        android:id="@+id/fragment_budget_progress"
+        android:name="com.example.fintrack.TienDoNganSachFragment"
+        android:label="@string/title_screen_6"
+        tools:layout="@layout/fragment_tien_do_ngan_sach" />
+
+    <activity
+        android:id="@+id/fragment_savings_goals"
+        android:name="com.example.fintrack.M9DanhSachMucTieuActivity"
+        android:label="@string/menu_savings_goals"
+        tools:layout="@layout/activity_m9_danhsachmuctieu" />
+</navigation>

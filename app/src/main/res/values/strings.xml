@@ -1,0 +1,122 @@
+<resources>
+    <string name="login">ĐĂNG NHẬP</string>
+    <string name="register">Đăng ký ngay</string>
+    <string name="guest">TRẢI NGHIỆM NGAY (OFFLINE)</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="welcome_back">Chào mừng bạn quay trở lại</string>
+    <string name="app_name">FinTrack</string>
+    <string name="title_statistics">Thống kê chi tiêu trực quan</string>
+    <string name="btn_this_month">Tháng này</string>
+    <string name="income_legend">Thu nhập (+)</string>
+    <string name="expense_legend">Chi tiêu (-)</string>
+    <string name="most_spent_envelope">Phong bì tiêu nhiều nhất</string>
+    <string name="default_balance">-12.450.000 đ</string>
+    <string name="menu_home">Trang chủ</string>
+    <string name="menu_statistics">Thống kê</string>
+    <string name="menu_history">Lịch sử</string>
+    <string name="menu_settings">Cài đặt</string>
+    <string name="title_settings">Cài đặt &amp; Đồng bộ</string>
+    <string name="backup_cloud">Sao Lưu Đám Mây</string>
+    <string name="connect_drive">Kết nối Google Drive</string>
+    <string name="auto_backup">Tự động sao lưu</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="msg_in_development">Tính năng đang phát triển</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+    <string name="dashboard_title">FinTrack</string>
+    <string name="label_balance">SỐ DƯ HIỆN TẠI</string>
+    <string name="label_expense">CHI TIÊU THÁNG NÀY</string>
+    <string name="label_spending_progress">TIẾN ĐỘ CHI TIÊU</string>
+    <string name="label_recent_transactions">CHI TIÊU GẦN ĐÂY</string>
+    <string name="action_view_all">Xem tất cả ></string>
+    <string name="action_view_history">Xem lịch sử ></string>
+    <string name="mock_balance">25.500.000 đ</string>
+    <string name="mock_expense">8.700.000 đ</string>
+    <string name="cat_food">🍔 Ăn uống</string>
+    <string name="cat_transport">🚗 Di chuyển</string>
+    <string name="cat_shopping">🛍️ Mua sắm</string>
+    <string name="limit_transport">25k vs limit</string>
+    <string name="limit_shopping">10k vs limit</string>
+    <string name="desc_add_transaction">Thêm giao dịch</string>
+    <string name="menu_categories">Danh mục</string>
+    <string name="menu_stats">Thống kê</string>
+    <string name="title_m4_envelopes">Quản lý Danh sách Phong bì</string>
+    <string name="btn_m4_create_envelope">TẠO PHONG BÌ MỚI</string>
+    <string name="label_m4_total_pool">Tổng bể tiền: 20.000.000 đ</string>
+    <string name="label_m4_remaining">còn lại</string>
+    <string name="label_m4_overspent">tiêu lạm</string>
+    <string name="desc_menu">Menu danh mục</string>
+    <string name="menu_manage_envelopes">Quản lý phong bì</string>
+    <string name="menu_monthly_budget">Ngân sách đầu tháng</string>
+    <string name="menu_savings_goals">Mục tiêu tiết kiệm</string>
+    <string name="hint_envelope_name">Tên phong bì</string>
+    <string name="title_quick_expense">Thêm chi tiêu nhanh</string>
+    <string name="amount_format">-%s đ</string>
+    <string name="label_select_envelope">Chọn phong bì</string>
+    <string name="btn_save_transaction">LƯU GIAO DỊCH</string>
+    <string name="msg_transaction_saved">Đã lưu giao dịch vào phong bì %s</string>
+    <string name="msg_input_error">Vui lòng nhập số tiền và chọn phong bì</string>
+    <string name="msg_eval_error">Lỗi biểu thức</string>
+    <!-- Navigation Strings (Quỳnh) -->
+    <string name="first_fragment_label">Phân bổ Ngân sách</string>
+    <string name="second_fragment_label">Tiến trình Hạn mức</string>
+    <string name="btn_screen_5">Màn hình 5</string>
+    <string name="btn_screen_6">Màn hình 6</string>
+
+    <!-- Screen 5 Strings -->
+    <string name="title_screen_5">PHÂN BỔ NGÂN SÁCH ĐẦU THÁNG</string>
+    <string name="target_income_label">TỔNG THU NHẬP MỤC TIÊU THÁNG</string>
+    <string name="total_allocated_label">Tổng phân bổ:</string>
+    <string name="remaining_balance_label">SỐ DƯ CÒN LẠI ĐỂ PHÂN BỔ:</string>
+    <string name="save_budget_btn">LƯU NGÂN SÁCH THÁNG</string>
+    <string name="save_success">Đã lưu và đồng bộ ngân sách lên Firebase!</string>
+    <string name="save_error_over_budget">Ngân sách bị vượt quá tổng thu nhập. Vui lòng điều chỉnh lại!</string>
+
+    <!-- Screen 6 Strings -->
+    <string name="title_screen_6">DANH SÁCH HẠN MỨC TRỰC QUAN</string>
+    <string name="limit_label">Hạn mức: %1$s</string>
+    <string name="spent_label">Đã tiêu: %1$s</string>
+    <string name="status_safe">Còn lại: %1$s (An toàn)</string>
+    <string name="status_warning">Còn lại: %1$s (Cảnh báo)</string>
+    <string name="status_danger">Còn lại: %1$s (Vượt hạn mức)</string>
+</resources>

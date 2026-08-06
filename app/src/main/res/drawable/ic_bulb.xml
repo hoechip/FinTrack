@@ -1,0 +1,18 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="40dp"
+    android:height="40dp"
+    android:viewportWidth="40"
+    android:viewportHeight="40">
+    <!-- Bulb glass -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M20,6 C13.4,6 8,11.4 8,18 C8,22.2 10.2,25.8 13.5,28 L13.5,31 C13.5,31.6 13.9,32 14.5,32 L25.5,32 C26.1,32 26.5,31.6 26.5,31 L26.5,28 C29.8,25.8 32,22.2 32,18 C32,11.4 26.6,6 20,6 Z" />
+    <!-- Screw base -->
+    <path
+        android:fillColor="#78909C"
+        android:pathData="M15,33 L25,33 L25,35 L15,35 Z M16,36 L24,36 C24,37.1 23.1,38 22,38 L18,38 C16.9,38 16,37.1 16,36 Z" />
+    <!-- Filament lines -->
+    <path
+        android:fillColor="#FFA000"
+        android:pathData="M18,14 L18,22 L22,22 L22,14 Z" />
+</vector>

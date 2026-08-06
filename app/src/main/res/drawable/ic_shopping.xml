@@ -1,0 +1,18 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+    <!-- Money Bag Body (Orange / Amber) -->
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M18,12 C14,12 8,16 8,24 C8,28.4 12.5,32 18,32 C23.5,32 28,28.4 28,24 C28,16 22,12 18,12 Z" />
+    <!-- Bag Tie top -->
+    <path
+        android:fillColor="#D97706"
+        android:pathData="M13,8 L23,8 L21,12 L15,12 Z" />
+    <!-- Dollar / Gold symbol -->
+    <path
+        android:fillColor="#FEF3C7"
+        android:pathData="M18,18 L18,26 M16,20 C16,19 17,18 18,18 C19,18 20,19 20,20 C20,22 16,22 16,24 C16,25 17,26 18,26 C19,26 20,25 20,24" />
+</vector>
