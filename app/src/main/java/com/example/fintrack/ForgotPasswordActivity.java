@@ -21,6 +21,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar_forgot_password);
+        toolbar.setNavigationOnClickListener(v -> finish());
+
         edtEmail = findViewById(R.id.edt_m4_email);
         btnSendOTP = findViewById(R.id.btn_m4_send_otp);
 
