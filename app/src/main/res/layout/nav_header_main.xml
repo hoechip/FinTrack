@@ -20,6 +20,7 @@
         app:strokeWidth="1dp" />
 
     <TextView
+        android:id="@+id/txt_nav_header_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
@@ -28,6 +29,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/txt_nav_header_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Quản lý tài chính cá nhân" />

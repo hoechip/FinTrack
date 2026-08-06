@@ -36,7 +36,6 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView txtUserEmail;
 
     private Button btnSave;
-    private ImageButton btnBack;
 
     private ImageButton btnChooseAvatar;
     private ImageView imgAvatar;
@@ -69,7 +68,9 @@ public class ProfileActivity extends AppCompatActivity {
         edtConfirmPassword = findViewById(R.id.edt_m2_confirm_password);
 
         btnSave = findViewById(R.id.btn_m2_save);
-        btnBack = findViewById(R.id.btn_profile_back);
+        
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar_profile);
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         loadData();
 
@@ -97,9 +98,6 @@ public class ProfileActivity extends AppCompatActivity {
         edtBirth.setOnClickListener(v -> showDatePicker());
 
         btnSave.setOnClickListener(v -> saveProfile());
-
-        btnBack.setOnClickListener(v -> finish());
-
     }
 
     private void showDatePicker() {

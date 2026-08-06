@@ -99,6 +99,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadAvatarToDrawer();
+    }
+
+    private void loadAvatarToDrawer() {
+        if (binding == null) return;
+        
+        View headerView = binding.navViewDrawer.getHeaderView(0);
+        if (headerView == null) return;
+        
+        android.widget.ImageView imgAvatar = headerView.findViewById(R.id.img_nav_header_avatar);
+        android.widget.TextView txtName = headerView.findViewById(R.id.txt_nav_header_name);
+        android.widget.TextView txtEmail = headerView.findViewById(R.id.txt_nav_header_email);
+        
+        if (imgAvatar == null) return;
+
+        android.content.SharedPreferences sp = getSharedPreferences("FinTrack", MODE_PRIVATE);
+        String avatarPath = sp.getString("AVATAR_PATH", "");
+        String fullName = sp.getString("FULLNAME", "");
+        String email = sp.getString("CURRENT_EMAIL", sp.getString("EMAIL", ""));
+
+        if (txtName != null && !fullName.isEmpty()) txtName.setText(fullName);
+        if (txtEmail != null && !email.isEmpty()) txtEmail.setText(email);
+
+        if (!avatarPath.isEmpty()) {
+            java.io.File file = new java.io.File(avatarPath);
+            if (file.exists()) {
+                imgAvatar.setImageURI(null);
+                imgAvatar.setImageURI(android.net.Uri.fromFile(file));
+            } else {
+                imgAvatar.setImageResource(R.drawable.ic_user_placeholder);
+            }
+        } else {
+            imgAvatar.setImageResource(R.drawable.ic_user_placeholder);
+        }
+    }
+
     // Xử lý chuyển Fragment Ngân sách từ code của Quỳnh
     @Override
     public void onClick(View v) {

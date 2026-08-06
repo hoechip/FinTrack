@@ -100,6 +100,26 @@ public class M3DashboardFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadRecentTransactions();
+        loadAvatar();
+    }
+
+    private void loadAvatar() {
+        if (binding == null) return;
+        
+        android.content.SharedPreferences sp = requireContext().getSharedPreferences("FinTrack", android.content.Context.MODE_PRIVATE);
+        String avatarPath = sp.getString("AVATAR_PATH", "");
+
+        if (!avatarPath.isEmpty()) {
+            java.io.File file = new java.io.File(avatarPath);
+            if (file.exists()) {
+                binding.imgM3Avatar.setImageURI(null);
+                binding.imgM3Avatar.setImageURI(android.net.Uri.fromFile(file));
+            } else {
+                binding.imgM3Avatar.setImageResource(R.drawable.ic_user_placeholder);
+            }
+        } else {
+            binding.imgM3Avatar.setImageResource(R.drawable.ic_user_placeholder);
+        }
     }
 
     private void listenToBudgetChanges() {
