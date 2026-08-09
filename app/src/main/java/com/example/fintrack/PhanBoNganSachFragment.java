@@ -238,7 +238,7 @@ public class PhanBoNganSachFragment extends Fragment {
         builder.setTitle("Xác nhận lưu ngân sách");
         builder.setMessage("Bạn có chắc chắn muốn lưu kế hoạch phân bổ ngân sách tháng "
                 + firebaseHelper.layThangHienTai()
-                + " lên Firebase không?\n\n"
+                + " không?\n\n"
                 + "• Tổng thu nhập: " + DinhDangTien.dinhDangVND(tongThuNhap) + "\n"
                 + "• Tổng phân bổ: " + DinhDangTien.dinhDangVND(tongPhanBo) + "\n"
                 + "• Số dư còn lại: " + DinhDangTien.dinhDangVNDCoDau(soDuConLai));

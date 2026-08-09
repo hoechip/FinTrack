@@ -53,21 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void insertInitialEnvelopes(SQLiteDatabase db) {
-        String[][] initialData = {
-                {"Ăn uống", "🍔", "2000000"},
-                {"Thuê nhà", "🏠", "5000000"},
-                {"Đi chơi", "🎮", "1000000"},
-                {"Đi lại", "🚲", "500000"}
-        };
-        for (String[] data : initialData) {
-            ContentValues values = new ContentValues();
-            values.put(COLUMN_ENV_NAME, data[0]);
-            values.put(COLUMN_ENV_ICON, data[1]);
-            values.put(COLUMN_ENV_LIMIT, Double.parseDouble(data[2]));
-            values.put(COLUMN_ENV_SPENT, 0);
-            values.put(COLUMN_ENV_REMAINING, Double.parseDouble(data[2]));
-            db.insert(TABLE_ENVELOPES, null, values);
-        }
+        // Để trống theo yêu cầu: Tài khoản mới không có dữ liệu ban đầu
     }
 
     @Override
@@ -75,5 +61,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSACTIONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENVELOPES);
         onCreate(db);
+    }
+
+    public void clearAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_TRANSACTIONS);
+        db.execSQL("DELETE FROM " + TABLE_ENVELOPES);
+        insertInitialEnvelopes(db);
     }
 }

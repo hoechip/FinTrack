@@ -65,7 +65,9 @@ public class M9DanhSachMucTieuActivity extends AppCompatActivity {
         danhSachMucTieu = new ArrayList<>();
 
         db = FirebaseFirestore.getInstance();
-        mucTieuRef = db.collection(FirestoreConst.COLLECTION_MUC_TIEU);
+        com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        String uid = (user != null) ? user.getUid() : "guest";
+        mucTieuRef = db.collection("users").document(uid).collection(FirestoreConst.COLLECTION_MUC_TIEU);
 
         adapter = new MucTieuAdapter(
                 danhSachMucTieu,

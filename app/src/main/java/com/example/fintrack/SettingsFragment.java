@@ -1,6 +1,5 @@
 package com.example.fintrack;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -62,7 +61,6 @@ public class SettingsFragment extends Fragment {
                     return;
                 }
                 
-                // Thực hiện sao lưu thực tế ở đây (ví dụ: backup database SQLite hoặc JSON)
                 performBackup(account);
             }
         });
@@ -98,13 +96,26 @@ public class SettingsFragment extends Fragment {
         });
 
         binding.btnSettingsLogout.setOnClickListener(v -> {
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            if (getActivity() != null) {
-                getActivity().finish();
-            }
+            // 1. Xóa dữ liệu cục bộ tài khoản hiện tại
+            DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+            dbHelper.clearAllData();
+            
+            SharedPreferences sp = requireContext().getSharedPreferences("FinTrack", Context.MODE_PRIVATE);
+            sp.edit().clear().apply();
+
+            // 2. Ngắt kết nối Google Drive hoàn toàn và sau đó Đăng xuất Firebase
+            driveHelper.signOut(() -> {
+                FirebaseAuth.getInstance().signOut();
+                
+                if (isAdded()) {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    if (getActivity() != null) {
+                        getActivity().finish();
+                    }
+                }
+            });
         });
     }
 
@@ -119,12 +130,12 @@ public class SettingsFragment extends Fragment {
     }
 
     private void updateDriveUI() {
+        if (binding == null) return;
         GoogleSignInAccount account = driveHelper.getSignedInAccount();
         if (account != null) {
             binding.txtDriveStatus.setText("Đã kết nối: " + account.getEmail());
             binding.btnConnectDrive.setText("Quản lý kết nối");
             binding.btnConnectDrive.setIconResource(R.drawable.ic_settings);
-            // Đổi màu nút khi đã kết nối để phân biệt
             binding.btnConnectDrive.setIconTintResource(R.color.text_secondary);
             binding.btnConnectDrive.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.text_secondary));
         } else {
@@ -140,8 +151,6 @@ public class SettingsFragment extends Fragment {
     private void performBackup(GoogleSignInAccount account) {
         Toast.makeText(getContext(), "Đang chuẩn bị dữ liệu sao lưu...", Toast.LENGTH_SHORT).show();
         
-        // TODO: Lấy file dữ liệu thực tế (VD: database app) để upload
-        // Ở đây chỉ minh họa bằng việc tạo một file tạm
         java.io.File cacheDir = requireContext().getCacheDir();
         java.io.File tempFile = new java.io.File(cacheDir, "fintrack_backup.json");
         

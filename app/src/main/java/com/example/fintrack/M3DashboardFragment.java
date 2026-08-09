@@ -86,8 +86,13 @@ public class M3DashboardFragment extends Fragment {
         });
 
         binding.btnM3ViewHistory.setOnClickListener(v -> {
-            NavHostFragment.findNavController(M3DashboardFragment.this)
-                    .navigate(R.id.fragment_history);
+            if (getActivity() != null) {
+                com.google.android.material.bottomnavigation.BottomNavigationView bnv = 
+                        getActivity().findViewById(R.id.bottom_nav);
+                if (bnv != null) {
+                    bnv.setSelectedItemId(R.id.fragment_history);
+                }
+            }
         });
         
         binding.imgM3Avatar.setOnClickListener(v -> {
@@ -244,7 +249,10 @@ public class M3DashboardFragment extends Fragment {
 
     private void loadSavingsGoals() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(FirestoreConst.COLLECTION_MUC_TIEU)
+        com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        String uid = (user != null) ? user.getUid() : "guest";
+        
+        db.collection("users").document(uid).collection(FirestoreConst.COLLECTION_MUC_TIEU)
                 .limit(3)
                 .addSnapshotListener((snapshot, error) -> {
                     if (error != null || snapshot == null || binding == null) return;
@@ -293,37 +301,46 @@ public class M3DashboardFragment extends Fragment {
     private void loadRecentTransactions() {
         if (binding == null) return;
 
-        List<Transaction> transactionList = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        String uid = (user != null) ? user.getUid() : "guest";
 
-        String query = "SELECT t.*, e." + DatabaseHelper.COLUMN_ENV_NAME + 
-                       ", e." + DatabaseHelper.COLUMN_ENV_ICON + 
-                       " FROM " + DatabaseHelper.TABLE_TRANSACTIONS + " t" +
-                       " LEFT JOIN " + DatabaseHelper.TABLE_ENVELOPES + " e" +
-                       " ON t." + DatabaseHelper.COLUMN_TRANS_ENV_ID + " = e." + DatabaseHelper.COLUMN_ENV_ID +
-                       " ORDER BY t." + DatabaseHelper.COLUMN_TRANS_DATE + " DESC LIMIT 5";
+        com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+        
+        db.collection("users").document(uid).collection(FirestoreConst.COLLECTION_GIAO_DICH)
+                .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
+                .limit(5)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null || value == null || binding == null) return;
 
-        Cursor cursor = db.rawQuery(query, null);
+                    List<Transaction> transactionList = new ArrayList<>();
+                    for (com.google.firebase.firestore.DocumentSnapshot doc : value.getDocuments()) {
+                        String title = doc.getString("title");
+                        Double amount = doc.getDouble("amount");
+                        String rawDate = doc.getString("date");
+                        String envId = doc.getString("envelopeId");
 
-        if (cursor.moveToFirst()) {
-            do {
-                String title = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TRANS_TITLE));
-                double amount = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TRANS_AMOUNT));
-                String rawDate = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TRANS_DATE));
-                // Lấy tag icon từ bảng phong bì thay vì để trống
-                String catIcon = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ENV_ICON));
+                        if (title == null || amount == null || rawDate == null) continue;
 
-                String formattedDate = formatDisplayDate(rawDate);
-                String amountStr = "-" + formatter.format(amount) + " đ";
-                
-                // Truyền catIcon vào constructor của Transaction
-                transactionList.add(new Transaction(title, formattedDate, amountStr, catIcon));
-            } while (cursor.moveToNext());
+                        String formattedDate = formatDisplayDate(rawDate);
+                        String amountStr = "-" + formatter.format(amount) + " đ";
+                        
+                        String catIcon = getIconForEnvelope(envId);
+                        transactionList.add(new Transaction(title, formattedDate, amountStr, catIcon));
+                    }
+
+                    RecentTransactionAdapter adapter = new RecentTransactionAdapter(transactionList);
+                    binding.rvM3RecentTransactions.setAdapter(adapter);
+                });
+    }
+
+    private String getIconForEnvelope(String envId) {
+        KeHoachNganSach keHoach = FirebaseHelper.layThucThe().layKeHoachHienTai();
+        if (keHoach != null && keHoach.getDanhSachPhongBi() != null) {
+            for (PhongBi pb : keHoach.getDanhSachPhongBi()) {
+                if (pb.getId().equals(envId)) return pb.getLoaiIcon();
+            }
         }
-        cursor.close();
-
-        RecentTransactionAdapter adapter = new RecentTransactionAdapter(transactionList);
-        binding.rvM3RecentTransactions.setAdapter(adapter);
+        return "wallet";
     }
 
     private String formatDisplayDate(String rawDate) {

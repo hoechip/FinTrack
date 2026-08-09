@@ -20,11 +20,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Button btn_m1_register;
     private TextView txt_m1_login;
+    private com.google.firebase.auth.FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        mAuth = com.google.firebase.auth.FirebaseAuth.getInstance();
 
         edt_m1_full_name = findViewById(R.id.edt_m1_full_name);
         edt_m1_email = findViewById(R.id.edt_m1_email);
@@ -38,8 +41,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             String name = edt_m1_full_name.getText().toString().trim();
             String email = edt_m1_email.getText().toString().trim();
-            String pass = edt_m1_password.getText().toString().trim();
-            String confirm = edt_m1_confirm_password.getText().toString().trim();
+            String pass = edt_m1_password.getText().toString(); // Không dùng trim() cho mật khẩu
+            String confirm = edt_m1_confirm_password.getText().toString();
 
             if(name.isEmpty() || email.isEmpty() || pass.isEmpty() || confirm.isEmpty()){
                 Toast.makeText(this,"Nhập đầy đủ thông tin",Toast.LENGTH_SHORT).show();
@@ -51,18 +54,33 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            SharedPreferences sp = getSharedPreferences("FinTrack",MODE_PRIVATE);
-            SharedPreferences.Editor editor = sp.edit();
+            mAuth.createUserWithEmailAndPassword(email, pass)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            // Xóa dữ liệu cũ của tài khoản trước đó trên máy này
+                            DatabaseHelper dbHelper = new DatabaseHelper(this);
+                            dbHelper.clearAllData();
 
-            editor.putString("FULLNAME",name);
-            editor.putString("EMAIL",email);
-            editor.putString("PASSWORD",pass);
-            editor.apply();
+                            SharedPreferences sp = getSharedPreferences("FinTrack",MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.clear(); // Làm mới hoàn toàn SharedPreferences
 
-            Toast.makeText(this,"Đăng ký thành công",Toast.LENGTH_SHORT).show();
+                            editor.putString("FULLNAME",name);
+                            editor.putString("EMAIL",email);
+                            editor.putString("PASSWORD",pass);
+                            editor.apply();
 
-            startActivity(new Intent(this,LoginActivity.class));
-            finish();
+                            // Xóa luôn liên kết Google Drive cũ (nếu có)
+                            new com.example.fintrack.util.GoogleDriveHelper(this).signOut(() -> {
+                                Toast.makeText(this,"Đăng ký thành công",Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(this,LoginActivity.class));
+                                finish();
+                            });
+                        } else {
+                            String error = task.getException() != null ? task.getException().getMessage() : "Đăng ký thất bại";
+                            Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                        }
+                    });
 
         });
 

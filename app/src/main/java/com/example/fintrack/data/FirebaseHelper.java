@@ -24,7 +24,7 @@ public class FirebaseHelper {
     private static final String NUT_NGAN_SACH = "envelope_budgets";
 
     private static FirebaseHelper thucThe;
-    private DatabaseReference databaseReference;
+    private DatabaseReference baseReference;
     private KeHoachNganSach keHoachHienTai;
 
     public interface LangNgheDuLieu {
@@ -34,8 +34,14 @@ public class FirebaseHelper {
 
     private FirebaseHelper() {
         FirebaseDatabase database = FirebaseDatabase.getInstance(URL_FIREBASE);
-        databaseReference = database.getReference(NUT_NGAN_SACH);
+        baseReference = database.getReference(); // Reference gốc
         keHoachHienTai = taoDuLieuMau();
+    }
+
+    private DatabaseReference getBudgetReference() {
+        com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        String uid = (user != null) ? user.getUid() : "guest";
+        return baseReference.child("users").child(uid).child(NUT_NGAN_SACH);
     }
 
     public static synchronized FirebaseHelper layThucThe() {
@@ -58,7 +64,7 @@ public class FirebaseHelper {
         this.keHoachHienTai = keHoach;
         String thang = keHoach.getThang() != null ? keHoach.getThang() : layThangHienTai();
         Log.d(TAG, "Đang lưu ngân sách lên Firebase tại node: " + NUT_NGAN_SACH + "/" + thang);
-        databaseReference.child(thang).setValue(keHoach).addOnCompleteListener(task -> {
+        getBudgetReference().child(thang).setValue(keHoach).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Log.d(TAG, "Lưu thành công lên Firebase!");
             } else {
@@ -72,7 +78,7 @@ public class FirebaseHelper {
 
     public void langNgheKeHoachNganSach(String thang, LangNgheDuLieu langNghe) {
         String thangTruyVan = (thang != null) ? thang : layThangHienTai();
-        databaseReference.child(thangTruyVan).addValueEventListener(new ValueEventListener() {
+        getBudgetReference().child(thangTruyVan).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -89,7 +95,7 @@ public class FirebaseHelper {
                     }
                 } else if (thangTruyVan.equals(layThangHienTai())) {
                     // Nếu là tháng hiện tại và chưa có dữ liệu, tự động đẩy dữ liệu mẫu
-                    databaseReference.child(thangTruyVan).setValue(keHoachHienTai);
+                    getBudgetReference().child(thangTruyVan).setValue(keHoachHienTai);
                 }
                 
                 if (langNghe != null) {
@@ -114,19 +120,12 @@ public class FirebaseHelper {
     public void dayDuLieuMauLenFirebase(OnCompleteListener<Void> langNghe) {
         String thang = layThangHienTai();
         this.keHoachHienTai = taoDuLieuMau();
-        databaseReference.child(thang).setValue(keHoachHienTai).addOnCompleteListener(langNghe);
+        getBudgetReference().child(thang).setValue(keHoachHienTai).addOnCompleteListener(langNghe);
     }
 
     public KeHoachNganSach taoDuLieuMau() {
-        ArrayList<PhongBi> danhSach = new ArrayList<>();
-        // Mock data chuẩn xác theo Ảnh 1 và Ảnh 2
-        danhSach.add(new PhongBi("food", "Ăn uống", "food", 5000000L, 1500000L));
-        danhSach.add(new PhongBi("rent", "Thuê nhà", "house", 4000000L, 0L));
-        danhSach.add(new PhongBi("transport", "Di chuyển", "bus", 1200000L, 0L));
-        danhSach.add(new PhongBi("utilities", "Điện nước", "lightning", 2000000L, 0L));
-        danhSach.add(new PhongBi("entertainment", "Giải trí", "gamepad", 3000000L, 2250000L));
-
-        return new KeHoachNganSach(layThangHienTai(), 20000000L, danhSach, System.currentTimeMillis());
+        // Trả về kế hoạch trống cho tài khoản mới
+        return new KeHoachNganSach(layThangHienTai(), 0L, new ArrayList<>(), System.currentTimeMillis());
     }
 
     public ArrayList<PhongBi> taoDuLieuMauManHinh6() {

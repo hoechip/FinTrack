@@ -16,6 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.fintrack.data.FirebaseHelper;
+import com.example.fintrack.model.KeHoachNganSach;
+import com.example.fintrack.model.PhongBi;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +49,16 @@ public class HistoryFragment extends Fragment {
         llTodayList = view.findViewById(R.id.llTodayList);
         llYesterdayList = view.findViewById(R.id.llYesterdayList);
         etSearch = view.findViewById(R.id.etSearch);
+        TextView tvYesterdayLabel = view.findViewById(R.id.tvYesterdayLabel);
         Button btnFilterSearch = view.findViewById(R.id.btnFilterSearch);
+
+        // Thiết lập tiêu đề ngày hôm qua động
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, -1);
+        String yesterdayStr = new SimpleDateFormat("dd/MM", Locale.getDefault()).format(cal.getTime());
+        if (tvYesterdayLabel != null) {
+            tvYesterdayLabel.setText("Giao dịch hôm qua, " + yesterdayStr);
+        }
 
         btnFilterSearch.setOnClickListener(v -> performSearch());
 
@@ -60,45 +73,53 @@ public class HistoryFragment extends Fragment {
     private void loadRealTransactions(String keyword) {
         llTodayList.removeAllViews();
         llYesterdayList.removeAllViews();
+
+        com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        String uid = (user != null) ? user.getUid() : "guest";
+
+        com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
         
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        
-        StringBuilder query = new StringBuilder();
-        query.append("SELECT t.*, e.").append(DatabaseHelper.COLUMN_ENV_NAME)
-             .append(", e.").append(DatabaseHelper.COLUMN_ENV_ICON)
-             .append(" FROM ").append(DatabaseHelper.TABLE_TRANSACTIONS).append(" t")
-             .append(" LEFT JOIN ").append(DatabaseHelper.TABLE_ENVELOPES).append(" e")
-             .append(" ON t.").append(DatabaseHelper.COLUMN_TRANS_ENV_ID).append(" = e.").append(DatabaseHelper.COLUMN_ENV_ID)
-             .append(" WHERE 1=1");
+        db.collection("users").document(uid).collection(FirestoreConst.COLLECTION_GIAO_DICH)
+                .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null || value == null) return;
 
-        List<String> args = new ArrayList<>();
-        if (!keyword.isEmpty()) {
-            query.append(" AND (t.").append(DatabaseHelper.COLUMN_TRANS_TITLE).append(" LIKE ? OR e.").append(DatabaseHelper.COLUMN_ENV_NAME).append(" LIKE ?)");
-            args.add("%" + keyword + "%");
-            args.add("%" + keyword + "%");
+                    llTodayList.removeAllViews();
+                    llYesterdayList.removeAllViews();
+
+                    for (com.google.firebase.firestore.DocumentSnapshot doc : value.getDocuments()) {
+                        String title = doc.getString("title");
+                        Double amount = doc.getDouble("amount");
+                        String rawDate = doc.getString("date");
+                        String envId = doc.getString("envelopeId");
+
+                        if (title == null || amount == null || rawDate == null) continue;
+
+                        // Lọc từ khóa nếu có
+                        if (!keyword.isEmpty() && !title.toLowerCase().contains(keyword.toLowerCase())) continue;
+
+                        String displayDate = formatDisplayDate(rawDate);
+                        
+                        // Lấy icon từ phong bì (Tháng hiện tại)
+                        String catIcon = getIconForEnvelope(envId);
+
+                        if (displayDate.startsWith("Hôm nay")) {
+                            addTransactionItem(llTodayList, catIcon, title, displayDate, "", -amount);
+                        } else {
+                            addTransactionItem(llYesterdayList, catIcon, title, displayDate, "", -amount);
+                        }
+                    }
+                });
+    }
+
+    private String getIconForEnvelope(String envId) {
+        KeHoachNganSach keHoach = FirebaseHelper.layThucThe().layKeHoachHienTai();
+        if (keHoach != null && keHoach.getDanhSachPhongBi() != null) {
+            for (PhongBi pb : keHoach.getDanhSachPhongBi()) {
+                if (pb.getId().equals(envId)) return pb.getLoaiIcon();
+            }
         }
-
-        query.append(" ORDER BY t.").append(DatabaseHelper.COLUMN_TRANS_DATE).append(" DESC");
-
-        Cursor cursor = db.rawQuery(query.toString(), args.toArray(new String[0]));
-
-        if (cursor.moveToFirst()) {
-            do {
-                String title = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TRANS_TITLE));
-                double amount = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TRANS_AMOUNT));
-                String rawDate = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TRANS_DATE));
-                String catIcon = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ENV_ICON));
-
-                String displayDate = formatDisplayDate(rawDate);
-
-                if (displayDate.startsWith("Hôm nay")) {
-                     addTransactionItem(llTodayList, catIcon, title, displayDate, "", -amount);
-                } else {
-                     addTransactionItem(llYesterdayList, catIcon, title, displayDate, "", -amount);
-                }
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
+        return "wallet";
     }
 
     private String formatDisplayDate(String rawDate) {

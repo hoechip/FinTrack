@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -264,25 +265,32 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         long amount = (long) Double.parseDouble(amountStr);
 
-        // 1. Cập nhật SQLite để lưu lịch sử giao dịch (Hiển thị ở Lịch sử)
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.beginTransaction();
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-            String currentDate = sdf.format(new Date());
+        com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        String uid = (user != null) ? user.getUid() : "guest";
 
-            ContentValues transValues = new ContentValues();
-            transValues.put(DatabaseHelper.COLUMN_TRANS_TITLE, "Chi tiêu " + selectedEnvelopeName);
-            transValues.put(DatabaseHelper.COLUMN_TRANS_AMOUNT, (double) amount);
-            transValues.put(DatabaseHelper.COLUMN_TRANS_ENV_ID, selectedEnvelopeId); // Lưu ID phong bì
-            transValues.put(DatabaseHelper.COLUMN_TRANS_DATE, currentDate);
-            db.insert(DatabaseHelper.TABLE_TRANSACTIONS, null, transValues);
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
+        // 1. Lưu giao dịch lên Firestore (Thay thế SQLite)
+        com.google.firebase.firestore.FirebaseFirestore firestore = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
 
-        // 2. Cập nhật Firebase để đồng bộ với Trang chủ và Hạn mức trực quan
+        java.util.Map<String, Object> transaction = new java.util.HashMap<>();
+        transaction.put("title", "Chi tiêu " + selectedEnvelopeName);
+        transaction.put("amount", (double) amount);
+        transaction.put("envelopeId", selectedEnvelopeId);
+        transaction.put("date", currentDate);
+        transaction.put("timestamp", com.google.firebase.firestore.FieldValue.serverTimestamp());
+
+        firestore.collection("users").document(uid).collection(FirestoreConst.COLLECTION_GIAO_DICH)
+                .add(transaction)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("AddTrans", "Transaction saved to Firestore");
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("AddTrans", "Error saving transaction", e);
+                });
+
+        // 2. Cập nhật Firebase Realtime Database (Ngân sách)
         KeHoachNganSach keHoach = firebaseHelper.layKeHoachHienTai();
         if (keHoach != null && keHoach.getDanhSachPhongBi() != null) {
             for (PhongBi pb : keHoach.getDanhSachPhongBi()) {

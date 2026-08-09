@@ -83,7 +83,9 @@ public class ChiTietMucTieuActivity extends AppCompatActivity {
         }
 
         db = FirebaseFirestore.getInstance();
-        mucTieuDocRef = db.collection(FirestoreConst.COLLECTION_MUC_TIEU)
+        com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        String uid = (user != null) ? user.getUid() : "guest";
+        mucTieuDocRef = db.collection("users").document(uid).collection(FirestoreConst.COLLECTION_MUC_TIEU)
                 .document(mucTieuId);
 
         // Nút back trên Toolbar
@@ -304,8 +306,11 @@ public class ChiTietMucTieuActivity extends AppCompatActivity {
     private void boOngTietKiem(long soTienBoOng) {
         btn_m10_boong.setEnabled(false);
 
+        com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        String uid = (user != null) ? user.getUid() : "guest";
+
         DocumentReference giaoDichDocRef =
-                db.collection(FirestoreConst.COLLECTION_GIAO_DICH).document();
+                db.collection("users").document(uid).collection(FirestoreConst.COLLECTION_GIAO_DICH).document();
 
         db.runTransaction((Transaction.Function<Long>) transaction -> {
 

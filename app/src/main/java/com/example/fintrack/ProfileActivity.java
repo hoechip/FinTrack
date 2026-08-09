@@ -168,105 +168,94 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void saveProfile() {
-
-        String fullName =
-                edtFullName.getText().toString().trim();
-
-        String birth =
-                edtBirth.getText().toString().trim();
-
-        String oldPass =
-                edtOldPassword.getText().toString().trim();
-
-        String newPass =
-                edtNewPassword.getText().toString().trim();
-
-        String confirmPass =
-                edtConfirmPassword.getText().toString().trim();
+        String fullName = edtFullName.getText().toString().trim();
+        String birth = edtBirth.getText().toString().trim();
+        String oldPass = edtOldPassword.getText().toString().trim();
+        String newPass = edtNewPassword.getText().toString().trim();
+        String confirmPass = edtConfirmPassword.getText().toString().trim();
 
         if (fullName.isEmpty()) {
-
             edtFullName.setError("Nhập họ tên");
-
             return;
-
         }
 
-        if (birth.isEmpty()) {
+        com.google.firebase.auth.FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null) return;
+        String uid = user.getUid();
 
-            edtBirth.setError("Chọn ngày sinh");
+        // 1. Lưu thông tin hồ sơ lên Firestore (Thay thế SharedPreferences)
+        com.google.firebase.firestore.FirebaseFirestore firestore = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+        java.util.Map<String, Object> profileData = new java.util.HashMap<>();
+        profileData.put("fullName", fullName);
+        profileData.put("birthday", birth);
 
-            return;
-
-        }
-
-        SharedPreferences.Editor editor = sp.edit();
-
-        editor.putString("FULLNAME", fullName);
-        editor.putString("BIRTH", birth);
-
-        if (!newPass.isEmpty()) {
-
-            String currentPassword =
-                    sp.getString("PASSWORD", "");
-
-            if (!oldPass.equals(currentPassword)) {
-
-                edtOldPassword.setError("Sai mật khẩu cũ");
-
-                return;
-
-            }
-
-            if (!newPass.equals(confirmPass)) {
-
-                edtConfirmPassword.setError("Mật khẩu không khớp");
-
-                return;
-
-            }
-
-            editor.putString("PASSWORD", newPass);
-
-        }
-
-        editor.apply();
-
-        txtUserName.setText(fullName);
-
-        Toast.makeText(this,
-                "Lưu thay đổi thành công",
-                Toast.LENGTH_SHORT).show();
-
-        edtOldPassword.setText("");
-        edtNewPassword.setText("");
-        edtConfirmPassword.setText("");
-
+        firestore.collection("users").document(uid).set(profileData, com.google.firebase.firestore.SetOptions.merge())
+                .addOnSuccessListener(unused -> {
+                    // Cập nhật SharedPreferences để đồng bộ local nhanh
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("FULLNAME", fullName);
+                    editor.putString("BIRTH", birth);
+                    
+                    if (!newPass.isEmpty()) {
+                        // Logic đổi mật khẩu Firebase
+                        user.updatePassword(newPass).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                editor.putString("PASSWORD", newPass);
+                                editor.apply();
+                                Toast.makeText(this, "Đã đổi mật khẩu và lưu hồ sơ", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(this, "Lỗi đổi mật khẩu: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        editor.apply();
+                        Toast.makeText(this, "Lưu hồ sơ thành công lên Firebase", Toast.LENGTH_SHORT).show();
+                    }
+                    txtUserName.setText(fullName);
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Lỗi lưu Firebase: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void loadData() {
+        com.google.firebase.auth.FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null) return;
+        String uid = user.getUid();
 
-        edtFullName.setText(
-                sp.getString("FULLNAME", ""));
+        // Ưu tiên load từ Firestore
+        com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                .collection("users").document(uid).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String fullName = documentSnapshot.getString("fullName");
+                        String birth = documentSnapshot.getString("birthday");
+                        String avatarUrl = documentSnapshot.getString("avatarUrl");
 
-        edtBirth.setText(
-                sp.getString("BIRTH", ""));
+                        if (fullName != null) {
+                            edtFullName.setText(fullName);
+                            txtUserName.setText(fullName);
+                            sp.edit().putString("FULLNAME", fullName).apply();
+                        }
+                        if (birth != null) {
+                            edtBirth.setText(birth);
+                            sp.edit().putString("BIRTH", birth).apply();
+                        }
+                        // Xử lý avatarUrl nếu có (trong tương lai)
+                    } else {
+                        // Fallback về SharedPreferences nếu chưa có trên Firebase
+                        edtFullName.setText(sp.getString("FULLNAME", ""));
+                        edtBirth.setText(sp.getString("BIRTH", ""));
+                    }
+                });
 
-        String avatarPath =
-                sp.getString("AVATAR_PATH", "");
-
+        String avatarPath = sp.getString("AVATAR_PATH", "");
         if (!avatarPath.isEmpty()) {
-
-            File file = new File(avatarPath);
-
+            java.io.File file = new java.io.File(avatarPath);
             if (file.exists()) {
-
-                imgAvatar.setImageURI(Uri.fromFile(file));
-
+                imgAvatar.setImageURI(android.net.Uri.fromFile(file));
             }
-
         }
-
     }
 
 }

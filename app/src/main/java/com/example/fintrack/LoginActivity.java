@@ -19,12 +19,15 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText edtEmail, edtPassword;
     private Button btnLogin;
     private TextView txtRegister, txtForgot;
+    private com.google.firebase.auth.FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+
+        mAuth = com.google.firebase.auth.FirebaseAuth.getInstance();
 
         // ========================
         // Kiểm tra Firebase
@@ -49,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> {
 
             String email = edtEmail.getText().toString().trim();
-            String password = edtPassword.getText().toString().trim();
+            String password = edtPassword.getText().toString(); // Không dùng trim() cho mật khẩu
 
             if (email.isEmpty()) {
                 edtEmail.setError("Vui lòng nhập Email");
@@ -63,39 +66,34 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            // Lấy dữ liệu đã đăng ký
-            SharedPreferences sp = getSharedPreferences("FinTrack", MODE_PRIVATE);
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            // Xóa dữ liệu cũ của tài khoản trước đó trên máy này
+                            DatabaseHelper dbHelper = new DatabaseHelper(this);
+                            dbHelper.clearAllData();
 
-            String savedEmail = sp.getString("EMAIL", "");
-            String savedPassword = sp.getString("PASSWORD", "");
+                            // Đăng nhập thành công, cập nhật SharedPreferences để đồng bộ local
+                            SharedPreferences sp = getSharedPreferences("FinTrack", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.clear(); // Làm mới dữ liệu cũ của tài khoản khác
 
-            // Kiểm tra tài khoản
-            if (email.equals(savedEmail) && password.equals(savedPassword)) {
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("CURRENT_EMAIL", email);
-                editor.apply();
-                Toast.makeText(
-                        LoginActivity.this,
-                        "Đăng nhập thành công",
-                        Toast.LENGTH_SHORT
-                ).show();
+                            editor.putString("CURRENT_EMAIL", email);
+                            editor.putString("EMAIL", email);
+                            editor.putString("PASSWORD", password); // Cập nhật mật khẩu mới vào local
+                            editor.apply();
 
-                Intent intent = new Intent(
-                        LoginActivity.this,
-                        MainActivity.class
-                );
-
-                startActivity(intent);
-                finish();
-
-            } else {
-
-                Toast.makeText(
-                        LoginActivity.this,
-                        "Sai Email hoặc mật khẩu",
-                        Toast.LENGTH_SHORT
-                ).show();
-            }
+                            // 3. Xóa luôn liên kết Google Drive cũ (nếu có) để nick mới không bị lẫn
+                            new com.example.fintrack.util.GoogleDriveHelper(this).signOut(() -> {
+                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
+                            });
+                        } else {
+                            String error = task.getException() != null ? task.getException().getMessage() : "Sai Email hoặc mật khẩu";
+                            Toast.makeText(LoginActivity.this, error, Toast.LENGTH_LONG).show();
+                        }
+                    });
 
         });
 

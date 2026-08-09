@@ -76,11 +76,12 @@
 
             <!-- Section Title -->
             <TextView
+                android:id="@+id/tvYesterdayLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
-                android:text="Giao dịch hôm qua, 15/07"
+                android:text="Giao dịch hôm qua"
                 android:textColor="#666666"
                 android:textSize="14sp" />
 
