@@ -58,24 +58,36 @@ public class RegisterActivity extends AppCompatActivity {
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
                             // Xóa dữ liệu cũ của tài khoản trước đó trên máy này
-                            DatabaseHelper dbHelper = new DatabaseHelper(this);
-                            dbHelper.clearAllData();
+                            try {
+                                DatabaseHelper dbHelper = new DatabaseHelper(this);
+                                dbHelper.clearAllData();
 
-                            SharedPreferences sp = getSharedPreferences("FinTrack",MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.clear(); // Làm mới hoàn toàn SharedPreferences
+                                SharedPreferences sp = getSharedPreferences("FinTrack", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.clear(); // Làm mới hoàn toàn SharedPreferences
 
-                            editor.putString("FULLNAME",name);
-                            editor.putString("EMAIL",email);
-                            editor.putString("PASSWORD",pass);
-                            editor.apply();
+                                editor.putString("FULLNAME", name);
+                                editor.putString("EMAIL", email);
+                                editor.putString("PASSWORD", pass);
+                                editor.apply();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
 
-                            // Xóa luôn liên kết Google Drive cũ (nếu có)
-                            new com.example.fintrack.util.GoogleDriveHelper(this).signOut(() -> {
-                                Toast.makeText(this,"Đăng ký thành công",Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(this,LoginActivity.class));
-                                finish();
-                            });
+                            // Chuyển sang màn hình đăng nhập ngay, không đợi Google Drive signOut (tránh treo)
+                            Toast.makeText(this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                            
+                            // Thực hiện signOut Google Drive ở background nếu có thể
+                            try {
+                                new com.example.fintrack.util.GoogleDriveHelper(this).signOut(() -> {
+                                    // Đã thoát Google Drive cũ
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            startActivity(new Intent(this, LoginActivity.class));
+                            finish();
                         } else {
                             String error = task.getException() != null ? task.getException().getMessage() : "Đăng ký thất bại";
                             Toast.makeText(this, error, Toast.LENGTH_LONG).show();

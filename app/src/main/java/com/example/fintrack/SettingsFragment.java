@@ -99,23 +99,28 @@ public class SettingsFragment extends Fragment {
             // 1. Xóa dữ liệu cục bộ tài khoản hiện tại
             DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
             dbHelper.clearAllData();
-            
+
             SharedPreferences sp = requireContext().getSharedPreferences("FinTrack", Context.MODE_PRIVATE);
             sp.edit().clear().apply();
 
-            // 2. Ngắt kết nối Google Drive hoàn toàn và sau đó Đăng xuất Firebase
-            driveHelper.signOut(() -> {
-                FirebaseAuth.getInstance().signOut();
-                
-                if (isAdded()) {
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    if (getActivity() != null) {
-                        getActivity().finish();
-                    }
-                }
-            });
+            // 2. Ngắt kết nối Google Drive (không đợi kết quả để tránh treo UI)
+            try {
+                driveHelper.signOut(() -> {
+                    // Đã thoát Google Drive
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // 3. Đăng xuất Firebase và quay về màn hình Login
+            FirebaseAuth.getInstance().signOut();
+
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            if (getActivity() != null) {
+                getActivity().finish();
+            }
         });
     }
 

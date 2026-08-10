@@ -69,26 +69,38 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
-                            // Xóa dữ liệu cũ của tài khoản trước đó trên máy này
-                            DatabaseHelper dbHelper = new DatabaseHelper(this);
-                            dbHelper.clearAllData();
+                            try {
+                                // Xóa dữ liệu cũ của tài khoản trước đó trên máy này
+                                DatabaseHelper dbHelper = new DatabaseHelper(this);
+                                dbHelper.clearAllData();
 
-                            // Đăng nhập thành công, cập nhật SharedPreferences để đồng bộ local
-                            SharedPreferences sp = getSharedPreferences("FinTrack", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.clear(); // Làm mới dữ liệu cũ của tài khoản khác
+                                // Đăng nhập thành công, cập nhật SharedPreferences để đồng bộ local
+                                SharedPreferences sp = getSharedPreferences("FinTrack", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.clear(); // Làm mới dữ liệu cũ của tài khoản khác
 
-                            editor.putString("CURRENT_EMAIL", email);
-                            editor.putString("EMAIL", email);
-                            editor.putString("PASSWORD", password); // Cập nhật mật khẩu mới vào local
-                            editor.apply();
+                                editor.putString("CURRENT_EMAIL", email);
+                                editor.putString("EMAIL", email);
+                                editor.putString("PASSWORD", password); // Cập nhật mật khẩu mới vào local
+                                editor.apply();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
 
-                            // 3. Xóa luôn liên kết Google Drive cũ (nếu có) để nick mới không bị lẫn
-                            new com.example.fintrack.util.GoogleDriveHelper(this).signOut(() -> {
-                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                finish();
-                            });
+                            // Chuyển vào màn hình chính ngay
+                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            
+                            // Thoát Google Drive cũ ở background (nếu có)
+                            try {
+                                new com.example.fintrack.util.GoogleDriveHelper(this).signOut(() -> {
+                                    // Đã thoát Google Drive cũ
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
                         } else {
                             String error = task.getException() != null ? task.getException().getMessage() : "Sai Email hoặc mật khẩu";
                             Toast.makeText(LoginActivity.this, error, Toast.LENGTH_LONG).show();
